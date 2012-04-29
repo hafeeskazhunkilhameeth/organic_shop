@@ -1,26 +1,26 @@
 $(document).ready(function () {
 /* Session Function */
 var cart = [];
-var session_cart = sessionStorage.getItem("cart");
-// var total = sessionStorage.getItem("total");
+// var session_cart = sessionStorage.getItem("cart");
+// // var total = sessionStorage.getItem("total");
 var cart_count = frappe.get_cookie("cart_count");
-console.log(cart_count)
+// console.log(cart_count)
 
 if(cart_count != 0) {
     $('#view_cart').removeAttr('hidden');
     set_cart()
 }
 
-console.log(session_cart)
-if(session_cart){
-    // $("#total").text(parseFloat(total))
-    cart = JSON.parse(session_cart)
-    // JSON.parse(session_cart).forEach(element => {
-    //     console.log(element)
-    //     $("#"+element.id).prop('checked', true)
-    //     $("#"+element.id).closest('tr').find('.qty').val(element.qty)
-    // });
-}
+// console.log(session_cart)
+// if(session_cart){
+//     // $("#total").text(parseFloat(total))
+//     cart = JSON.parse(session_cart)
+//     // JSON.parse(session_cart).forEach(element => {
+//     //     console.log(element)
+//     //     $("#"+element.id).prop('checked', true)
+//     //     $("#"+element.id).closest('tr').find('.qty').val(element.qty)
+//     // });
+// }
 
 
 
@@ -191,11 +191,27 @@ if(session_cart){
     $("#add_to_cart").on("click", function() {
         
         var cart_item = []
-        cart.forEach(element => {
+
+        if (cart.length > 0){
+
+            cart.forEach(element => {
             
-            cart_item.push({"item_code":element.item,"qty":element.qty});
-        });
-        shopping_cart_update(cart_item)
+                cart_item.push({"item_code":element.item,"qty":element.qty});
+            });
+            shopping_cart_update(cart_item)
+
+        }else{
+
+            alert("Please Select Item To Add into Cart")
+
+
+        }
+
+        // cart.forEach(element => {
+            
+        //     cart_item.push({"item_code":element.item,"qty":element.qty});
+        // });
+        // shopping_cart_update(cart_item)
         
         // window.location.href = "/cart";
     })
@@ -243,7 +259,7 @@ function update_local_cart(case_option,cart,ops=null){
     // cart.forEach(opts => {
     //     shopping_cart_update (opts)        
     // });
-    sessionStorage.setItem("cart",JSON.stringify(cart));
+    // sessionStorage.setItem("cart",JSON.stringify(cart));
     // sessionStorage.setItem("total", total);
 
     return cart

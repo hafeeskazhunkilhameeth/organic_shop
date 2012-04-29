@@ -121,7 +121,7 @@ def update_cart_custom(items=[],with_items=True):
 			})
 
         else:
-            quotation.items = []
+            # quotation.items = []
             for item in cart_items:
                 quotation.append("items", {
 				"doctype": "Quotation Item",
