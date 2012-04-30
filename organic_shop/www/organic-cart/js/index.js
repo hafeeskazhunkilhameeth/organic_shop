@@ -199,6 +199,7 @@ if(cart_count != 0) {
                 cart_item.push({"item_code":element.item,"qty":element.qty});
             });
             shopping_cart_update(cart_item)
+            cart = [];
 
         }else{
 
@@ -296,6 +297,7 @@ async function shopping_cart_update (opts) {
                $('#view_cart').removeAttr('hidden');
                $("input.checkmark:checkbox").prop('checked', false)
                $("input.counter").val(1)
+               
                
             }
         });
