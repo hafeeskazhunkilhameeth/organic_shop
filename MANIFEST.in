@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include organic_shop *.css
+recursive-include organic_shop *.csv
+recursive-include organic_shop *.html
+recursive-include organic_shop *.ico
+recursive-include organic_shop *.js
+recursive-include organic_shop *.json
+recursive-include organic_shop *.md
+recursive-include organic_shop *.png
+recursive-include organic_shop *.py
+recursive-include organic_shop *.svg
+recursive-include organic_shop *.txt
+recursive-exclude organic_shop *.pyc
