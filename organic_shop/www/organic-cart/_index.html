@@ -1,0 +1,109 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Organic Cart</title>
+      <script>
+        window.frappe = {};
+        frappe.ready_events = [];
+        frappe.ready = function (fn) {
+            frappe.ready_events.push(fn);
+        };
+        window.dev_server = 1;
+        window.socketio_port = 9000;
+        frappe.csrf_token = "{{ csrf_token }}";
+    </script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-sm-3">
+                <table id="item_group">
+                    <th>Item Group</th>
+                    <tr>
+                      <td><a href="#">All</a></td>
+                    </tr>
+                    {% for item in item_group %}
+                    <tr>
+                        <td><a href="#">{{item.name}}</a></td>
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+            </div>
+            
+            <div class="col-sm-6">
+                <table style="width: 100%;">
+                    <tr>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Option</th>
+                      <th>Price</th>
+                      <th>Qty</th>
+                      <th>Action</th>
+                    </tr>
+                    {% for it in item_result %}
+                    
+                    <tr class= "item {{it.item_group}}">
+                      <td>{% if(it.image != '' and it.image != 'None' and it.image != None ) %}
+                        <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{it.image}}">
+                        {% else %}
+                        <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/files/download.png">
+                        {% endif %}
+                      </td>
+                      <td class="item_name">{{it.item}}</td>
+                      <td>
+                        <select class="option">
+                        {% if it.has_variant == 1 %}
+                        
+                          {% for var in it.variant %}
+                          {% if var.stock != None %}
+                          <option value="{{var.variant}}" stock="{{var.stock}}" price="{{var.price}}">{{var.variant}}</option>
+                          {% endif %}
+                          {% endfor %}
+                       
+                        {% else %}
+                        
+                          <option value="{{it.item}}" stock="{{it.stock}}" price="{{it.price}}" selected>{{it.item}}</option>
+                        
+                        {% endif %}
+                      </select>
+                      </td>
+                      <td class = "price">
+                      {% if it.has_variant == 1 %}
+                        {{it.variant[0].price}}
+                      {% else %}
+                        {{it.price}}
+                      {% endif %}
+                      </td>
+                      <td><input type="number"  class="qty" value="1"></td>
+                      <td><input type="checkbox" class="select_qty"></td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+            </div>
+            
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <table id="cart_total">
+                  <th>Cart Total</th>
+                  <tr>
+                    <td id="total">0.00</td>
+                    <td>INR</td>
+                  </tr>                  
+              </table>
+          </div>
+          </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+    <script type="text/javascript" src="/assets/js/erpnext-web.min.js"></script>
+    <script src="/organic-cart/js/function.js"></script>
+    <script src="/organic-cart/js/index.js"></script>
+    
+    
+</html>
