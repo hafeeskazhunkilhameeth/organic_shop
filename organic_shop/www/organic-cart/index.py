@@ -24,7 +24,7 @@ def get_items():
             variant = frappe.db.sql("""select name,item_group,website_warehouse from `tabItem` it where it.variant_of = %s""",item.name,as_dict = 1)
             variant_list = []
             for var in variant:
-                price = frappe.db.get_value("Item Price",{"item_code":var.name,"price_list":"Standard","selling":1},"price_list_rate")
+                price = frappe.db.get_value("Item Price",{"item_code":var.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
                 stock = frappe.db.get_value("Bin",{"item_code":var.name,"warehouse":var.website_warehouse},"actual_qty")
                 
                 variant_list.append({
@@ -42,7 +42,7 @@ def get_items():
                 "item_group":item.item_group
             })
         else:
-            price = frappe.db.get_value("Item Price",{"item_code":item.name,"price_list":"Standard","selling":1},"price_list_rate")
+            price = frappe.db.get_value("Item Price",{"item_code":var.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
             stock = frappe.db.get_value("Bin",{"item_code":item.name,"warehouse":item.website_warehouse},"actual_qty")
             result_items.append({
                 "has_variant":item.has_variants,
