@@ -14,27 +14,39 @@ class Test(Document):
 		for item in items:
 			if item.has_variants == 1:
 				variant = frappe.db.sql("""select name,item_group,website_warehouse from `tabItem` it where it.variant_of = %s""",item.name,as_dict = 1)
+				# frappe.throw(str(variant))
+				variant_list = []
 				for var in variant:
-					price = frappe.db.get_value("Item Price",{"item_code":var.name,"price_list":"Standard","selling":1},"price_list_rate")
+					# frappe.msgprint(str(var))
+					price = frappe.db.get_value("Item Price",{"item_code":var.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
 					stock = frappe.db.get_value("Bin",{"item_code":var.name,"warehouse":var.website_warehouse},"actual_qty")
-					result_items.append({
-						"item":item.name,
-						"image":item.image,
+					
+					variant_list.append({
+						
 						"variant":var.name,
 						"stock":stock,
-						"price":price
+						"price":price,
+						
 					})
+				result_items.append({
+					"has_variant":item.has_variants,
+					"item":item.name,
+					"image":item.image,
+					"variant":variant_list,
+					"item_group":item.item_group
+				})
 			else:
-				price = frappe.db.get_value("Item Price",{"item_code":item.name,"price_list":"Standard","selling":1},"price_list_rate")
+				price = frappe.db.get_value("Item Price",{"item_code":item.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
 				stock = frappe.db.get_value("Bin",{"item_code":item.name,"warehouse":item.website_warehouse},"actual_qty")
 				result_items.append({
+					"has_variant":item.has_variants,
 					"item":item.name,
 					"image":item.image,
 					"variant":None,
 					"stock":stock,
-					"price":price
+					"price":price,
+					"item_group":item.item_group
 				})
 		frappe.throw(str(result_items))
-		return result_items
 
-	pass
+
