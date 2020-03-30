@@ -76,7 +76,7 @@
                       {% endif %}
                       </td>
                       <td><input type="number"  class="qty" value="1"></td>
-                      <td><input type="checkbox" class="select_qty"></td>
+                      <td><label for={{item.name}}><input type="checkbox" class="select_qty" id={{item.name}}></label></td>
                     </tr>
                     {% endfor %}
                   </table>
