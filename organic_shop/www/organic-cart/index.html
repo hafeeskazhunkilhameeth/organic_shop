@@ -493,6 +493,7 @@
                                     <tbody>
                                         {% for it in item_result %}
                                        <tr class="item {{it.item_group}}">
+                                           
                                           <td class="image">
                                             <div class="random-img"> 
                                                 {% if(it.image != '' and it.image != 'None' and it.image != None ) %}
@@ -541,7 +542,7 @@
                                             </div> -->
                                           </td>
                                           <td> 
-                                            <label class="checkbox-inline" for={{it.name}}><input value="" id={{it.name}} class="checkmark" type="checkbox" ></label>
+                                            <label class="checkbox-inline" for={{it.item}}><input value="" id={{it.item}} class="checkmark" type="checkbox" ></label>
                                           </td>
                                        </tr>
                                        {% endfor %}</tbody></table>
