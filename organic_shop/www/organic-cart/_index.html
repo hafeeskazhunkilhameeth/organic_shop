@@ -76,7 +76,8 @@
                       {% endif %}
                       </td>
                       <td><input type="number"  class="qty" value="1"></td>
-                      <td><label for={{it.item}}><input type="checkbox" class="select_qty" id={{it.item}}></label></td>
+                      {% set id = it.route.split('/') %}
+                      <td><label for={{id[2]}}><input type="checkbox" class="select_qty" id={{id[2]}}></label></td>
                     </tr>
                     {% endfor %}
                   </table>

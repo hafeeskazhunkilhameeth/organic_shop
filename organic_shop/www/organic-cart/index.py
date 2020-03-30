@@ -17,7 +17,7 @@ def get_context(context):
 
 def get_items():
     result_items = []
-    items = frappe.db.sql(""" select name,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1""",as_dict = 1)
+    items = frappe.db.sql(""" select name,route,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1""",as_dict = 1)
 
     for item in items:
         if item.has_variants == 1:
@@ -35,6 +35,7 @@ def get_items():
                     
                 })
             result_items.append({
+                "route":item.route,
                 "has_variant":item.has_variants,
                 "item":item.name,
                 "image":item.image,
@@ -45,6 +46,7 @@ def get_items():
             price = frappe.db.get_value("Item Price",{"item_code":item.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
             stock = frappe.db.get_value("Bin",{"item_code":item.name,"warehouse":item.website_warehouse},"actual_qty")
             result_items.append({
+                "route":item.route,
                 "has_variant":item.has_variants,
                 "item":item.name,
                 "image":item.image,

@@ -542,7 +542,8 @@
                                             </div> -->
                                           </td>
                                           <td> 
-                                            <label class="checkbox-inline" for={{it.item}}><input value="" id={{it.item}} class="checkmark" type="checkbox" ></label>
+                                            {% set id = it.route.split('/') %}
+                                            <td><label for={{id[2]}}><input type="checkbox" class="select_qty" id={{id[2]}}></label></td>
                                           </td>
                                        </tr>
                                        {% endfor %}</tbody></table>
