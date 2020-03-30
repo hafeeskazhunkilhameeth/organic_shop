@@ -9,7 +9,7 @@ window.cart = (function () {
             return new Promise(function (resolve, reject) {
                 try {
                     frappe.call({
-                        method: FRAPPE_CLIENT + '.get_list',
+                        method: 'organic_shop.api.get_list_custom',
                         args: {
                             doctype: opts.doctype,
                             fields: opts.fields,
@@ -17,7 +17,8 @@ window.cart = (function () {
                             order_by: opts.order_by,
                             limit_start: opts.limit_start,
                             limit_page_length: opts.limit_page_length,
-                            parent: opts.parent
+                            parent: opts.parent,
+
                         },
                         callback: resolve
                     });
