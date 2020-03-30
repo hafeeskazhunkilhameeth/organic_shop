@@ -4,7 +4,6 @@ var FRAPPE_CLIENT = 'frappe.client'
 window.cart = (function () {
 
     return {
-        //frappe logout
        
         list: function (opts) {
             return new Promise(function (resolve, reject) {
