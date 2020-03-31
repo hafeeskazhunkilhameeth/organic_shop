@@ -7,6 +7,7 @@ def get_context(context):
     #     frappe.local.flags.redirect_location = '/'
     #     raise frappe.Redirect
 
+    context.session = frappe.session
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
     context.item_group = frappe.get_all("Item Group",filters={"show_in_website":1,"is_group":0},fields=["name"])
