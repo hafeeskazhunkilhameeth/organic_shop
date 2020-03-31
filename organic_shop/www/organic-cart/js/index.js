@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     console.log(frappe)
     /* Item group Filter */
 
@@ -140,12 +141,12 @@ $(document).ready(function () {
 
     $("#add_to_cart").on("click", function() {
         
-        cart.forEach(async element => {
+        var cart_item = []
+        cart.forEach(element => {
             
-            let result = await shopping_cart_update (element); 
-            let json_respone = await result
-            console.log(json_respone);
+            cart_item.push({"item_code":element.item,"qty":element.qty});
         });
+        shopping_cart_update(cart_item)
         
         // window.location.href = "/cart";
     })
@@ -213,17 +214,28 @@ async function shopping_cart_update (opts) {
         }
         window.location.href = "/login";
     } else {
-
-        let result = await erpnext.shopping_cart.update_cart({
-            
-			item_code:opts.item,
-			additional_notes:opts.additional_notes,
-            qty: opts.qty
+        console.log(opts)
+        return frappe.call({
+            type: "POST",
+            method: "organic_shop.organic_cart.update_cart_custom",
+            args: {"items":opts,"with_items":1},
+            btn: opts.btn,
+            callback: function(r) {
+               console.log(r.message)
+            }
         });
+        // let result = await erpnext.shopping_cart.update_cart({
+            
+		// 	item_code:opts.item,
+		// 	additional_notes:opts.additional_notes,
+        //     qty: opts.qty
+        // });
         
-        return result
+        // return result
     }
 
+
+    
     
 }
 

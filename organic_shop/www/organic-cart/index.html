@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <!--[if IE 7]><html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
 <!--[if IE 8]><html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
@@ -26,10 +27,23 @@
         <meta name="author" content="Md. Siful Islam, Jtheme">
 
         <title>Naturix</title>
-
+        
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="144x144" href="app-assets/ico/apple-touch-icon-144-precomposed.png">
         <link rel="shortcut icon" href="app-assets/ico/favicon.ico">
+        {% if head_html is defined -%}
+		{{ head_html or "" }}
+		{%- endif %}
+
+		{% if theme.theme_url %}
+		<link type="text/css" rel="stylesheet" href="{{ theme.theme_url }}">
+		{% else %}
+		<link type="text/css" rel="stylesheet" href="/assets/css/frappe-web-b4.css">
+
+		{%- for link in web_include_css %}
+		<link type="text/css" rel="stylesheet" href="{{ link|abs_url }}">
+		{%- endfor -%}
+		{% endif %}
 
         <!-- Font Icon -->
         <link href="app-assets/css/plugin/font-awesome.min.css" rel="stylesheet" type="text/css">  
@@ -43,13 +57,15 @@
 
         <!-- Custom CSS -->
         <link href="app-assets/css/theme.css" rel="stylesheet" type="text/css">
-		<link href="organic-cart/css/custom.css" rel="stylesheet" type="text/css">
+        <link href="organic-cart/css/custom.css" rel="stylesheet" type="text/css">
+        
         <!-- Color CSS --> 
 
         <!--[if lt IE 9]>
         <script src="app-assets/js/plugin/html5shiv.js"></script>
         <script src="app-assets/js/plugin/respond.js"></script>
-        <![endif]-->        
+        <![endif]-->  
+         
     </head>
 
     <body id="home" class="wide">
@@ -65,13 +81,29 @@
         </div>
 
 
+        
+		{% include "templates/includes/navbar/navbar.html" %}
+	   
         <!-- WRAPPER -->
+        
         <main class="wrapper home-wrap"> 
             <!-- CONTENT AREA -->
 
             <!-- Main Header Start -->
-            <header class="main-header style-2">                  
-                <div class="container-fluid rel-div">
+            <!-- <header class="main-header style-2">   
+                 
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="page-header">
+                        {% block header %}{% endblock %}
+                    </div>
+        
+                    {% if self.header_actions() %}
+                    <div class="page-header-actions-block">
+                        {% block header_actions %}{% endblock %}
+                    </div>
+                    {% endif %}
+                </div>              
+                 <div class="container-fluid rel-div">
                     <div class="col-lg-4 col-sm-8">
                         <div class="main-logo">
                             <a href="index.html"> <img alt="" src="app-assets/img/logo/main-logo-2.png" />  </a>
@@ -94,7 +126,7 @@
                     </div>
 
                 </div>  
-            </header>
+            </header> -->
             <!-- / Main Header Ends -->   
 
             <!-- Main Slider Start -->
@@ -929,7 +961,7 @@
         <!-- / Subscribe Popup-Dark -->
 
         <!-- JS Global -->
-
+        
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -939,6 +971,9 @@
         <script type="text/javascript" src="/assets/js/erpnext-web.min.js"></script>
         <script src="/organic-cart/js/function.js"></script>
         <script src="/organic-cart/js/index.js"></script>
+        {%- for link in web_include_js %}
+        <script type="text/javascript" src="{{ link | abs_url }}"></script>
+        {%- endfor -%}
 
         <script src="/app-assets/js/plugin/jquery-2.2.4.min.js"></script>   
         <script src="/app-assets/js/plugin/bootstrap.min.js"></script>
@@ -953,4 +988,5 @@
 
 
     </body>
+    
 </html>

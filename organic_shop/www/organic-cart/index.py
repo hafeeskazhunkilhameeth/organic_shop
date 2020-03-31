@@ -1,5 +1,9 @@
 import frappe
 import json
+from erpnext.shopping_cart.cart import get_cart_quotation
+
+# def get_context(context):
+# 	context.update(get_cart_quotation())
 
 
 def get_context(context):
@@ -13,6 +17,7 @@ def get_context(context):
     context.item_group = frappe.get_all("Item Group",filters={"show_in_website":1,"is_group":0},fields=["name"])
     # context.item = frappe.get_all("Item",filters={"show_in_website":1},fields=["name","image","item_group"])
     context.item_result = get_items()
+    context.update(get_cart_quotation())
 
     return context
 

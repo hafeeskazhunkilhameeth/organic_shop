@@ -5,8 +5,13 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from organic_shop.organic_cart import update_cart,update_cart_custom
 
 class Test(Document):
+	def update_cart_test(self):
+		multi_result = update_cart_custom([],with_items=True)
+		# result = update_cart(item_code="Apple",qty=0,with_items=True)
+		frappe.msgprint(str(multi_result))
 	def get_items(self):
 		result_items = []
 		items = frappe.db.sql(""" select name,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1""",as_dict = 1)

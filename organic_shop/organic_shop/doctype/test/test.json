@@ -10,10 +10,10 @@
    "fieldname": "test",
    "fieldtype": "Button",
    "label": "test",
-   "options": "get_items"
+   "options": "update_cart_test"
   }
  ],
- "modified": "2020-03-28 05:28:08.928116",
+ "modified": "2020-03-31 08:21:01.030263",
  "modified_by": "Administrator",
  "module": "Organic Shop",
  "name": "Test",
