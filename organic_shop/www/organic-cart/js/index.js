@@ -7,20 +7,27 @@ $(document).ready(function () {
     // }).then((res) =>{
     //     console.log(res)
     // });
-      
+    $("#item_group a").removeClass("active"); 
     if($( this ).text() != "All"){
-        $("tr").filter(".item."+$( this ).text()).css("display", "block") ;   
+        $("tr").filter(".item."+$( this ).text()).css("display", "table-row") ;   
         $("tr").filter(".item:not(."+$( this ).text()+")").css("display", "none") ;
     }else{
-        $("tr").filter(".item").css("display", "block") ; 
+        $("tr").filter(".item").css("display", "table-row") ; 
     }
     
     });
+	
+	$('.up_count').click(function (e) {
+		$(this).parent().find('.counter').val(parseInt($(this).parent().find('.counter').val()) + 1);
+	});
+	$('.down_count').click(function (e) {
+		$(this).parent().find('.counter').val(parseInt($(this).parent().find('.counter').val()) - 1);
+	});
 
     $(".option").on("change", function() {
-        console.log($($(this)[0].selectedOptions[0]).attr('price'))
+       /* console.log($($(this)[0].selectedOptions[0]).attr('price'))
         console.log($($(this)[0].selectedOptions[0]).attr('stock'))
-        console.log($(this).closest('tr').find('.price'))
+        console.log($(this).closest('tr').find('.price'))*/
         
         $(this).closest('tr').find('.price').html($($(this)[0].selectedOptions[0]).attr('price')) 
     })
@@ -30,10 +37,10 @@ $(document).ready(function () {
         const additional_notes ="no notes"
         const qty = $(this).val();
         
-        console.log( $(this).closest('tr').find('.select_option').find("select.option"))
-        var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock')
-        console.log($(this).val())
-        console.log(existing_stock)
+        /*console.log( $(this).closest('tr').find('.select_option').find("select.option"))*/
+        var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock');
+        /*console.log($(this).val())
+        console.log(existing_stock)*/
         if(parseInt($(this).val()) > parseInt(existing_stock)){
             alert("This item has only {0} stock".format(existing_stock))
         }

@@ -40,7 +40,7 @@
 
         <!-- Custom CSS -->
         <link href="app-assets/css/theme.css" rel="stylesheet" type="text/css">
-
+		<link href="organic-cart/css/custom.css" rel="stylesheet" type="text/css">
         <!-- Color CSS --> 
 
         <!--[if lt IE 9]>
@@ -462,14 +462,13 @@
                             <div class="widget-wrap">
                                 <h2 class="widget-title"> <span class="light-font">Refine by</span> <strong>category</strong> </h2>
                                 <div class="divider-full-1"></div>
-                                <table id="item_group">
-                                    <th>Item Group</th>
+                                <table id="item_group" style="width:100%;">
                                     <tr>
-                                      <td><a href="#">All</a></td>
+                                      <td><a href="#" class="vigieCart-anchor active" data-toggle="tab">All</a></td>
                                     </tr>
                                     {% for item in item_group %}
                                     <tr>
-                                        <td><a href="#">{{item.name}}</a></td>
+                                        <td><a class="vigieCart-anchor" href="#" data-toggle="tab" >{{item.name}}</a></td>
                                     </tr>
                                     {% endfor %}
                                     
@@ -479,11 +478,10 @@
                         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 vigieCart-tab tab-content">
                             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 col-1-rgt pad-resp-r">
                                 
-                                <table class="product-table">
+                                <table class="product-table table-bordered">
                                     <thead class="">
                                        <tr>
-                                          <th>product detail</th>
-                                          <th></th>
+                                          <th colspan="2">product detail</th>
                                           <th>Option</th>
                                           <th>Product price</th>
                                           <th>quantity</th>
@@ -506,9 +504,9 @@
                                           <td class="item_name">{{it.item}}</td>
                                           <td class="select_option">
                                              
-                                            <div class="search-selectpicker selectpicker-wrapper">
-                                                <select class="option selectpicker input-price" data-width="100%"
-                                                data-toggle="tooltip">
+                                            <div class="search-selectpicker  select">
+												
+                                                <select class="option select4opt input-price" >
                                                     {% if it.has_variant == 1 %}
                                                     
                                                       {% for var in it.variant %}
@@ -533,30 +531,34 @@
                                               {{it.price}}
                                             {% endif %}
                                             </td>
-                                          <td>
-                                            <td><input type="number"  class="qty" value="1"></td>
-                                            <!-- <div class="quantity">
-                                                <button class="btn minus"><i class="fa fa-minus-circle"></i></button>
-                                                <input title="Qty" class="form-control qty" type="number" value="1">
-                                                <button class="btn plus"><i class="fa fa-plus-circle"></i></button>
-                                            </div> -->
+                                          <td class="cart_unit">
+                                            <!--<input type="number"  class="qty" value="1"> -->
+                                            <div class="main">
+                                                <button class="down_count btn btn-info"><i class="fa fa-minus"></i></button>
+                                                <input title="Qty" class=" qty counter" type="number" value="1" min="1">
+                                                <button class="up_count btn btn-info"><i class="fa fa-plus"></i></button>
+                                            </div>
                                           </td>
-                                          <td> 
+                                          <td class="custom-vegie"> 
                                             {% set id = it.route.split('/') %}
-                                            <td><label for={{id[2]}}><input type="checkbox" class="select_qty" id={{id[2]}}></label></td>
+                                            <input type="checkbox" class="select_qty checkmark" id={{id[2]}}><label for={{id[2]}}></label>
                                           </td>
                                        </tr>
                                        {% endfor %}</tbody></table>
                                        
                                    
                             </div>
-                            <div class="pad-o col-lg-2 col-md-2 col-sm-2 col-xs-3 stick-element" id="stick-element">  <table id="cart_total">
-                                <th>Cart Total</th>
-                                <tr>
-                                  <td id="total">0.00</td>
-                                  <td>INR</td>
-                                </tr>                  
-                            </table></div>
+                            <div class="pad-o col-lg-2 col-md-2 col-sm-2 col-xs-3 stick-element" id="stick-element">  
+								<div>
+								<h3 class="price"> 
+									<small>Cart Total</small> 
+									<span class="total_amount" id="total">00</span> INR 
+								</h3>
+								</div>	
+								<div> 
+									<div class="tctcntr"> <button class="btn btn-success custom_add2cart">Add To Cart</button> </div>
+								</div>
+							</div>
                         </div>
                     </div>
                     
