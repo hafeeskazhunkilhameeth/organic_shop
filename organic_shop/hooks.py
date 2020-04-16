@@ -20,6 +20,7 @@ app_license = "MIT"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/organic_shop/css/organic_shop.css"
+web_include_css = "/app-assets/css/theme.css"
 # web_include_js = "/assets/organic_shop/js/organic_shop.js"
 
 # include js in page

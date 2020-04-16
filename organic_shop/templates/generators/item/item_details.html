@@ -17,6 +17,11 @@
 	{{ _("No description given") }}
 {% endif  %}
 </div>
+	<div class="cart_unit ">
+		<button class="down_count btn btn-info"><i class="fa fa-minus"></i></button>
+		<input title="Qty" class=" qty counter" type="number" value="1" min="1">
+		<button class="up_count btn btn-info"><i class="fa fa-plus"></i></button>
+	</div>
 
 {% if has_variants %}
 	<!-- configure template -->
