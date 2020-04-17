@@ -14,8 +14,8 @@ $(document).ready(function () {
             var link = element.route.split("/")[2]
             console.log(element.route.split("/")[2])
             $( ".card-group" ).append( 
-                `<div class="card">
-                <img class="card-img-top" src="`+element.image+`" alt="Card image cap" href="#" style="width: 30%;">
+                `<div class="card item">
+                <div class="card-img-box" ><img class="card-img-top" src="`+element.image+`" alt="Card image cap" /></div>
                 <div class="card-body">
                   <h5 class="card-title"><a href="`+link+`">`+ element.name+`</a></h5>
                 </div>

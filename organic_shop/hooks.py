@@ -23,6 +23,15 @@ app_license = "MIT"
 web_include_css = "/app-assets/css/theme.css"
 # web_include_js = "/assets/organic_shop/js/organic_shop.js"
 
+web_include_js = "/app-assets/js/plugin/jquery-2.2.4.min.js"
+web_include_js = "/app-assets/js/plugin/bootstrap.min.js"
+web_include_js = "/app-assets/js/plugin/bootstrap-select.min.js"
+web_include_js = "/app-assets/js/plugin/owl.carousel.min.js"
+web_include_js = "/app-assets/js/plugin/jquery.plugin.min.js"
+web_include_js = "/app-assets/js/plugin/jquery.countdown.js"
+web_include_js = "/app-assets/js/plugin/jquery.subscribe-better.min.js"
+
+
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
 
