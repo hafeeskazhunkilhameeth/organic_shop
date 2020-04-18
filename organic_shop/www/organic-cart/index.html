@@ -284,8 +284,13 @@
                                     </thead>
                                     <tbody>
                                         {% for it in item_result %}
-                                       <tr class="item {{it.item_group}}">
-                                           
+                                        {% if it.in_stock == 1 %}
+                                       <tr class="item {{it.item_group}} disable-content">
+                                        <!-- if product is out of stock 001 start-->
+										  <!-- <td colspan="6" style="padding: 0;" >
+												<table>
+													<tr> -->
+										<!-- if product is out of stock 001 end-->   
                                           <td class="image">
                                             <div class="random-img"> 
                                                 {% if(it.image != '' and it.image != 'None' and it.image != None ) %}
@@ -296,37 +301,39 @@
                                             </div>
                                           </td>
                                           <td class="item_name" hidden>{{it.item}}</td>
-                                          <td class="item">{{it.item_name}}</td>
+                                          <td class="item" width="150px">{{it.item_name}}</td>
                                           <td class="select_option">
-                                             
                                             <div class="search-selectpicker  select">
-												
                                                 <select class="option select4opt input-price" >
                                                     {% if it.has_variant == 1 %}
                                                     
                                                       {% for var in it.variant %}
-                                                      {% if var.stock != None %}
+                                                      {% if (var.stock != None and var.stock|float != 0.0) %}
                                                       <option value="{{var.variant}}" stock="{{var.stock}}" price="{{var.price}}">{{var.variant_name}}</option>
                                                       {% endif %}
                                                       {% endfor %}
                                                    
                                                     {% else %}
-                                                    {% if it.stock != None %}
+                                                    {% if (it.stock != None and it.stock|float != 0.0) %}
                                                       <option value="{{it.item}}" stock="{{it.stock}}" price="{{it.price}}" selected>{{it.item_name}}</option>
                                                     {% endif %}
                                                     
                                                     {% endif %}
                                                   </select>
                                             </div>
-                                             
                                           </td>
                                           <td class = "price">
-                                            {% if it.has_variant == 1 %}
-                                            {% if products|length > 1 %}
-                                              {{it.variant[0].price}}
-                                            {% else %}
-                                              0.00
-                                            {% endif %}
+                                            
+                                            {% if (it.has_variant == 1 ) %}
+                                                {% if it.variant|length > 0 %}
+                                                    {% if it.variant[0].price %}
+                                                    {{it.variant[0].price}}
+                                                    {% else %}
+                                                    0.00
+                                                    {% endif %}
+                                                {% else %}
+                                                    0.00
+                                                {% endif %}
                                             {% else %}
                                                 {% if it.price == None %}
                                                 0.00
@@ -349,7 +356,93 @@
                                             {% set list_index = id|length - 1 %}
                                             <input type="checkbox" class="select_qty checkmark" id={{id[list_index]}}><label for={{id[list_index]}}></label>
                                           </td>
+										   
+									    <!-- if product is out of stock 002 start-->
+											   <!-- </tr>
+											</table>
+										   </td> -->
+										<!-- if product is out of stock 002 end-->   
                                        </tr>
+                                        {% else %}
+                                        <tr class="item {{it.item_group}} disable-content">
+                                            <!-- if product is out of stock 001 start-->
+                                              <td colspan="6" style="padding: 0;" >
+                                                    <table>
+                                                        <tr>
+                                            <!-- if product is out of stock 001 end-->   
+                                              <td class="image">
+                                                <div class="random-img"> 
+                                                    {% if(it.image != '' and it.image != 'None' and it.image != None ) %}
+                                                    <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="{{it.image}}">
+                                                    {% else %}
+                                                    <img style="color: white;height: 40px;width: 40px;background-color: #bbb;border-radius: 50%;display: inline-block;text-align: center;"  src="/files/download.png">
+                                                    {% endif %}
+                                                </div>
+                                              </td>
+                                              <td class="item_name" hidden>{{it.item}}</td>
+                                              <td class="item" width="150px">{{it.item_name}}</td>
+                                              <td class="select_option">
+                                                <div class="search-selectpicker  select">
+                                                    <select class="option select4opt input-price" >
+                                                        {% if it.has_variant == 1 %}
+                                                        
+                                                          {% for var in it.variant %}
+                                                          {% if (var.stock != None and var.stock|float != 0.0) %}
+                                                          <option value="{{var.variant}}" stock="{{var.stock}}" price="{{var.price}}">{{var.variant_name}}</option>
+                                                          {% endif %}
+                                                          {% endfor %}
+                                                       
+                                                        {% else %}
+                                                        {% if (it.stock != None and it.stock|float != 0.0) %}
+                                                          <option value="{{it.item}}" stock="{{it.stock}}" price="{{it.price}}" selected>{{it.item_name}}</option>
+                                                        {% endif %}
+                                                        
+                                                        {% endif %}
+                                                      </select>
+                                                </div>
+                                              </td>
+                                              <td class = "price">
+                                                
+                                                {% if (it.has_variant == 1 ) %}
+                                                    {% if it.variant|length > 0 %}
+                                                        {% if it.variant[0].price %}
+                                                        {{it.variant[0].price}}
+                                                        {% else %}
+                                                        0.00
+                                                        {% endif %}
+                                                    {% else %}
+                                                        0.00
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if it.price == None %}
+                                                    0.00
+                                                    {% else %}
+                                                    {{it.price}}
+                                                    {% endif %}
+                                                  
+                                                {% endif %}
+                                                </td>
+                                              <td class="cart_unit">
+                                                <!--<input type="number"  class="qty" value="1"> -->
+                                                <div class="main">
+                                                    <button class="down_count btn btn-info"><i class="fa fa-minus"></i></button>
+                                                    <input title="Qty" class=" qty counter" type="number" value="1" min="1" readonly>
+                                                    <button class="up_count btn btn-info"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                              </td>
+                                              <td class="custom-vegie"> 
+                                                {% set id = it.route.split('/') %}
+                                                {% set list_index = id|length - 1 %}
+                                                <input type="checkbox" class="select_qty checkmark" id={{id[list_index]}}><label for={{id[list_index]}}></label>
+                                              </td>
+                                               
+                                            <!-- if product is out of stock 002 start-->
+                                                   </tr>
+                                                </table>
+                                               </td>
+                                            <!-- if product is out of stock 002 end-->   
+                                           </tr>
+                                        {% endif %}
                                        {% endfor %}</tbody></table>
                                        
                                    
