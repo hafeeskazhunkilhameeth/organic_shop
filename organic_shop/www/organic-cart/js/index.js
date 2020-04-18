@@ -19,7 +19,7 @@ $(document).ready(function () {
     /* Item group Filter */
     
     /* Qty up down counter */
-	$('.up_count').click(function (e) {
+	$('.vigieCart-tab .up_count').click(function (e) {
         var set_cart = 0
         var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock');
         
@@ -41,7 +41,7 @@ $(document).ready(function () {
 
         }
 	});
-	$('.down_count').click(function (e) {
+	$('.vigieCart-tab .down_count').click(function (e) {
         var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock');
         const price = parseFloat($('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('price'));
         if(parseFloat(parseFloat($(this).parent().find('.counter').val()) - 1) > parseFloat(existing_stock)){
