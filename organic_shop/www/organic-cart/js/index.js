@@ -1,11 +1,37 @@
 $(document).ready(function () {
+/* Session Function */
+var cart = [];
+var session_cart = sessionStorage.getItem("cart");
+var total = sessionStorage.getItem("total");
+var cart_count = frappe.get_cookie("cart_count");
 
+if(cart_count) {
+    $('#view_cart').removeAttr('hidden');
+    set_cart()
+}
+
+console.log(total)
+console.log(session_cart)
+if(session_cart){
+    
+    $("#total").text(parseFloat(total))
+    cart = JSON.parse(session_cart)
+    JSON.parse(session_cart).forEach(element => {
+        console.log(element)
+        $("#"+element.id).prop('checked', true)
+        $("#"+element.id).closest('tr').find('.qty').val(element.qty)
+    });
+}
+
+
+
+/* Session Function */
     console.log(frappe)
     /* Item group Filter */
 
     
     // console.log(frappe.session.user)
-    var cart = [];
+    
   $("#item_group").on("click", "td", function() {
     $("#item_group a").removeClass("active"); 
     if($( this ).text() != "All"){
@@ -36,7 +62,7 @@ $(document).ready(function () {
         
         if($(this).closest('tr').find('input.checkmark')[0].checked && set_cart){
             
-                cart = update_local_cart(3,cart,{"item":item_code,"notes":"no notes","qty":qty,"price":price})
+                cart = update_local_cart(3,cart,{"item":item_code,"notes":"no notes","qty":qty,"price":price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
                 console.log(cart)
 
         }
@@ -56,7 +82,7 @@ $(document).ready(function () {
         
         if($(this).closest('tr').find('input.checkmark')[0].checked && set_cart){
             
-                cart = update_local_cart(3,cart,{"item":item_code,"notes":"no notes","qty":qty,"price":price})
+                cart = update_local_cart(3,cart,{"item":item_code,"notes":"no notes","qty":qty,"price":price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
                 console.log(cart)
 
         }
@@ -121,7 +147,7 @@ $(document).ready(function () {
            
             $(this).closest('tr').find('.select_option').find("select.option").prop('disabled', 'disabled');
 
-            cart = update_local_cart(1,cart,{"item":item_code,"notes":additional_notes,"qty":qty,"price":price})
+            cart = update_local_cart(1,cart,{"item":item_code,"notes":additional_notes,"qty":qty,"price":price,"id":$(this).attr("id")})
             console.log(cart)
 
         }else{
@@ -129,7 +155,7 @@ $(document).ready(function () {
             
             $(this).closest('tr').find('.option').prop('disabled', false);
             
-            cart = update_local_cart(2,cart,{"item":item_code,"notes":additional_notes,"qty":qty,"price":price})
+            cart = update_local_cart(2,cart,{"item":item_code,"notes":additional_notes,"qty":qty,"price":price,"id":$(this).attr("id")})
             console.log(cart)
            
         }
@@ -194,7 +220,8 @@ function update_local_cart(case_option,cart,ops=null){
     // cart.forEach(opts => {
     //     shopping_cart_update (opts)        
     // });
-    
+    sessionStorage.setItem("cart",JSON.stringify(cart));
+    sessionStorage.setItem("total", total);
 
     return cart
 
@@ -215,6 +242,8 @@ async function shopping_cart_update (opts) {
         window.location.href = "/login";
     } else {
         console.log(opts)
+        $("#add_to_cart").prop('disabled', true);
+        frappe.freeze();
         return frappe.call({
             type: "POST",
             method: "organic_shop.organic_cart.update_cart_custom",
@@ -222,6 +251,11 @@ async function shopping_cart_update (opts) {
             btn: opts.btn,
             callback: function(r) {
                console.log(r.message)
+               set_cart()
+               frappe.unfreeze();
+               $("#add_to_cart").prop('disabled',false);
+               $('#view_cart').removeAttr('hidden');
+               
             }
         });
         // let result = await erpnext.shopping_cart.update_cart({
@@ -237,6 +271,37 @@ async function shopping_cart_update (opts) {
 
     
     
+}
+
+function set_cart() {
+    var cart_count = frappe.get_cookie("cart_count");
+    if(frappe.session.user==="Guest") {
+        cart_count = 0;
+    }
+
+    if(cart_count) {
+        $(".shopping-cart").toggleClass('hidden', false);
+    }
+
+    var $cart = $('.cart-icon');
+    var $badge = $cart.find("#cart-count");
+
+    if(parseInt(cart_count) === 0 || cart_count === undefined) {
+        $cart.css("display", "none");
+        $(".cart-items").html('Cart is Empty');
+        $(".cart-tax-items").hide();
+        $(".btn-place-order").hide();
+        $(".cart-addresses").hide();
+    }
+    else {
+        $cart.css("display", "inline");
+    }
+
+    if(cart_count) {
+        $badge.html(cart_count);
+    } else {
+        $badge.remove();
+    }
 }
 
 /* Update erpnext cart function */
