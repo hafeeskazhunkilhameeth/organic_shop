@@ -173,6 +173,14 @@ button.btn.btn-success.custom_add2cart {
 .dropdown-toggle::after{
 	display: none;
 }
+.form-control.navbar-search{
+	border-radius: 7px;
+    box-shadow: none;
+    font-size: 14px;
+    height: auto;
+    line-height: 20px;
+    padding: 5px 10px;
+}
 @media (max-width:990px){
 	.stick-element {
 		margin-top: 15px;
