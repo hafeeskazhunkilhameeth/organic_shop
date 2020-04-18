@@ -88,7 +88,7 @@ select.select4opt{
 td.cart_unit .main {
     padding: 0 0 0 5px;
 }
-.down_count, .up_count {
+.vigieCart-tab .cart_unit .down_count, .vigieCart-tab .cart_unit .up_count {
     height: 33px;
     width: 33px;
     margin: 0 -5px!important;
@@ -97,7 +97,7 @@ td.cart_unit .main {
     border: 1px solid #f9b600 !important;
     position: relative;
     border-radius: 2px;
-	color: #fff;
+	color: #fff !important;
 }
 .counter {
     width: 45px;
@@ -138,11 +138,16 @@ td.cart_unit .main {
     color: #fff;
 }
 .stick-element {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 90px;
     padding: 18px !important;
     background: #dedede;
+}
+
+@media (min-width:990px){
+	.stick-element {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 90px;
+	}
 }
 h3.price {
     margin: 0 0 32px 0;
@@ -162,3 +167,38 @@ button.btn.btn-success.custom_add2cart {
     background-color: #b1251b;
     border-color: #b32c22;
 }
+.navbar {
+	margin-bottom: 0;
+}
+.dropdown-toggle::after{
+	display: none;
+}
+@media (max-width:990px){
+	.stick-element {
+		margin-top: 15px;
+	}
+	a.vigieCart-anchor.active:after{
+		display: none;
+	}
+}
+@media (max-width: 768px){
+	.naturix-goods .container {
+		width: 99%;
+		max-width: 100%;
+	}
+	.vigieCart-tab .cart_unit .down_count, .vigieCart-tab .cart_unit .up_count{
+		display: block;
+		margin: auto !important;
+	}
+}
+@media (max-width: 576px){
+	.naturix-goods .container {
+		max-width: 100%;
+	}
+}
+ @media (min-width: 768px){
+.navbar-nav {
+    float: right;
+    margin: 0;
+}
+}    
