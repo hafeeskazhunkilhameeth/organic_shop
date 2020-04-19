@@ -50,7 +50,7 @@ if(session_cart){
         var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock');
         
         if(parseFloat(parseFloat($(this).parent().find('.counter').val()) + 1) > parseFloat(existing_stock)){
-            alert("This item has only stock")
+            alert("This item has only "+ existing_stock +" stock")
         }else{
             $(this).parent().find('.counter').val(parseFloat($(this).parent().find('.counter').val()) + 1);
             set_cart = 1;

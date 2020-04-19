@@ -15,6 +15,9 @@
 {% if doc.items and cart_settings.enable_checkout %}
 <button class="btn btn-primary btn-place-order" type="button">
 	{{ _("Place Order") }}
+</button><br><br>
+<button class="btn btn-primary" onclick="window.location.href = '/'" type="button">
+	{{ _("Continue Shopping") }}
 </button>
 {% endif %}
 {% if doc.items and not cart_settings.enable_checkout %}

@@ -295,7 +295,8 @@
                                                 {% endif %}
                                             </div>
                                           </td>
-                                          <td class="item_name">{{it.item}}</td>
+                                          <td class="item_name" hidden>{{it.item}}</td>
+                                          <td class="item">{{it.item_name}}</td>
                                           <td class="select_option">
                                              
                                             <div class="search-selectpicker  select">
@@ -305,13 +306,14 @@
                                                     
                                                       {% for var in it.variant %}
                                                       {% if var.stock != None %}
-                                                      <option value="{{var.variant}}" stock="{{var.stock}}" price="{{var.price}}">{{var.variant}}</option>
+                                                      <option value="{{var.variant}}" stock="{{var.stock}}" price="{{var.price}}">{{var.variant_name}}</option>
                                                       {% endif %}
                                                       {% endfor %}
                                                    
                                                     {% else %}
-                                                    
-                                                      <option value="{{it.item}}" stock="{{it.stock}}" price="{{it.price}}" selected>{{it.item}}</option>
+                                                    {% if it.stock != None %}
+                                                      <option value="{{it.item}}" stock="{{it.stock}}" price="{{it.price}}" selected>{{it.item_name}}</option>
+                                                    {% endif %}
                                                     
                                                     {% endif %}
                                                   </select>
@@ -320,9 +322,18 @@
                                           </td>
                                           <td class = "price">
                                             {% if it.has_variant == 1 %}
+                                            {% if products|length > 1 %}
                                               {{it.variant[0].price}}
                                             {% else %}
-                                              {{it.price}}
+                                              0.00
+                                            {% endif %}
+                                            {% else %}
+                                                {% if it.price == None %}
+                                                0.00
+                                                {% else %}
+                                                {{it.price}}
+                                                {% endif %}
+                                              
                                             {% endif %}
                                             </td>
                                           <td class="cart_unit">
@@ -335,7 +346,8 @@
                                           </td>
                                           <td class="custom-vegie"> 
                                             {% set id = it.route.split('/') %}
-                                            <input type="checkbox" class="select_qty checkmark" id={{id[2]}}><label for={{id[2]}}></label>
+                                            {% set list_index = id|length - 1 %}
+                                            <input type="checkbox" class="select_qty checkmark" id={{id[list_index]}}><label for={{id[list_index]}}></label>
                                           </td>
                                        </tr>
                                        {% endfor %}</tbody></table>

@@ -23,18 +23,18 @@ def get_context(context):
 
 def get_items():
     result_items = []
-    items = frappe.db.sql(""" select name,route,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1""",as_dict = 1)
+    items = frappe.db.sql(""" select name,item_name,route,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1 and it.is_sales_item = 1""",as_dict = 1)
 
     for item in items:
         if item.has_variants == 1:
-            variant = frappe.db.sql("""select name,item_group,website_warehouse from `tabItem` it where it.variant_of = %s""",item.name,as_dict = 1)
+            variant = frappe.db.sql("""select name,item_name,item_group,website_warehouse from `tabItem` it where it.variant_of = %s""",item.name,as_dict = 1)
             variant_list = []
             for var in variant:
                 price = frappe.db.get_value("Item Price",{"item_code":var.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
                 stock = frappe.db.get_value("Bin",{"item_code":var.name,"warehouse":var.website_warehouse},"actual_qty")
                 
                 variant_list.append({
-                    
+                    "variant_name":var.item_name,
                     "variant":var.name,
                     "stock":stock,
                     "price":price,
@@ -44,6 +44,7 @@ def get_items():
                 "route":item.route,
                 "has_variant":item.has_variants,
                 "item":item.name,
+                "item_name":item.item_name,
                 "image":item.image,
                 "variant":variant_list,
                 "item_group":item.item_group
@@ -55,6 +56,7 @@ def get_items():
                 "route":item.route,
                 "has_variant":item.has_variants,
                 "item":item.name,
+                "item_name":item.item_name,
                 "image":item.image,
                 "variant":None,
                 "stock":stock,
