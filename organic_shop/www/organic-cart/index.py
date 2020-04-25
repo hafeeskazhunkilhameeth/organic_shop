@@ -14,7 +14,8 @@ def get_context(context):
     context.session = frappe.session
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
-    context.item_group = frappe.get_all("Item Group",filters={"show_in_website":1,"is_group":0},fields=["name"])
+    context.item_group = frappe.get_all('Item Group', filters={"show_in_website":1,"is_group":0}, fields=["name","weightage"], order_by='weightage desc')
+    
     # context.item = frappe.get_all("Item",filters={"show_in_website":1},fields=["name","image","item_group"])
     context.item_result = get_items()
     context.update(get_cart_quotation())
@@ -24,7 +25,7 @@ def get_context(context):
 
 def get_items():
     result_items = []
-    items = frappe.db.sql(""" select name,item_name,route,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1 and it.is_sales_item = 1""",as_dict = 1)
+    items = frappe.db.sql(""" select name,stock_uom,item_name,route,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1 and it.is_sales_item = 1""",as_dict = 1)
 
     for item in items:
         if item.has_variants == 1:
@@ -45,6 +46,7 @@ def get_items():
                     
                 })
             result_items.append({
+                
                 "route":item.route,
                 "has_variant":item.has_variants,
                 "item":item.name,
@@ -61,6 +63,7 @@ def get_items():
             if stock != None and stock != 0:
                 in_stock=1
             result_items.append({
+                "uom":item.stock_uom,
                 "route":item.route,
                 "has_variant":item.has_variants,
                 "item":item.name,

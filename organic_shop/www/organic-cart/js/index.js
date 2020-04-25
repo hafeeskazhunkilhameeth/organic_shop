@@ -2,37 +2,37 @@ $(document).ready(function () {
 /* Session Function */
 var cart = [];
 var session_cart = sessionStorage.getItem("cart");
-var total = sessionStorage.getItem("total");
+// var total = sessionStorage.getItem("total");
 var cart_count = frappe.get_cookie("cart_count");
+console.log(cart_count)
 
-if(cart_count) {
+if(cart_count != 0) {
     $('#view_cart').removeAttr('hidden');
     set_cart()
 }
 
-console.log(total)
 console.log(session_cart)
 if(session_cart){
-    
-    $("#total").text(parseFloat(total))
+    // $("#total").text(parseFloat(total))
     cart = JSON.parse(session_cart)
-    JSON.parse(session_cart).forEach(element => {
-        console.log(element)
-        $("#"+element.id).prop('checked', true)
-        $("#"+element.id).closest('tr').find('.qty').val(element.qty)
-    });
+    // JSON.parse(session_cart).forEach(element => {
+    //     console.log(element)
+    //     $("#"+element.id).prop('checked', true)
+    //     $("#"+element.id).closest('tr').find('.qty').val(element.qty)
+    // });
 }
 
 
 
 /* Session Function */
-    console.log(frappe)
+    
     /* Item group Filter */
 
-    
-    // console.log(frappe.session.user)
-    
+  $("tr").filter(".item."+$($("#item_group tr")[0]).find('.vigieCart-anchor').text()).css("display", "table-row") ;   
+  $("tr").filter(".item:not(."+$($("#item_group tr")[0]).find('.vigieCart-anchor').text()+")").css("display", "none") ;
+  $($("#item_group tr")[0]).find('.vigieCart-anchor').addClass("active");
   $("#item_group").on("click", "td", function() {
+
     $("#item_group a").removeClass("active"); 
     if($( this ).text() != "All"){
         $("tr").filter(".item."+$( this ).text()).css("display", "table-row") ;   
@@ -46,43 +46,42 @@ if(session_cart){
     
     /* Qty up down counter */
 	$('.vigieCart-tab .up_count').click(function (e) {
+        console.log(fetch_item_details(this))
         var set_cart = 0
-        var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock');
         
-        if(parseFloat(parseFloat($(this).parent().find('.counter').val()) + 1) > parseFloat(existing_stock)){
-            alert("This item has only "+ existing_stock +" stock")
+        if(parseFloat(parseFloat($(this).parent().find('.counter').val()) + 1) > fetch_item_details(this).stock){
+            alert("This item has only "+ fetch_item_details(this).stock +" stock")
+            return 0
         }else{
             $(this).parent().find('.counter').val(parseFloat($(this).parent().find('.counter').val()) + 1);
             set_cart = 1;
         }
         
-        const item_code = $(this).closest('tr').find('.select_option').find("select.option").val()
-        const qty =$(this).parent().find('.counter').val()
-        const price = parseFloat($('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('price'));
+        
         
         if($(this).closest('tr').find('input.checkmark')[0].checked && set_cart){
             
-                cart = update_local_cart(3,cart,{"item":item_code,"notes":"no notes","qty":qty,"price":price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
+                cart = update_local_cart(3,cart,{"item":fetch_item_details(this).item_code,"notes":"no notes","qty":fetch_item_details(this).qty,"price":fetch_item_details(this).price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
                 console.log(cart)
 
         }
 	});
 	$('.vigieCart-tab .down_count').click(function (e) {
-        var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock');
-        const price = parseFloat($('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('price'));
-        if(parseFloat(parseFloat($(this).parent().find('.counter').val()) - 1) > parseFloat(existing_stock)){
-            alert("This item has only stock")
+        console.log(fetch_item_details(this))
+       
+        if(parseFloat(parseFloat($(this).parent().find('.counter').val()) - 1) > fetch_item_details(this).stock){
+            alert("This item has only "+ fetch_item_details(this).stock +" stock")
+            return 0
         }else{
             $(this).parent().find('.counter').val(parseFloat($(this).parent().find('.counter').val()) - 1);
             set_cart = 1;
         }
         
-        const item_code = $(this).closest('tr').find('.select_option').find("select.option").val()
-        const qty =$(this).parent().find('.counter').val()
+        
         
         if($(this).closest('tr').find('input.checkmark')[0].checked && set_cart){
             
-                cart = update_local_cart(3,cart,{"item":item_code,"notes":"no notes","qty":qty,"price":price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
+            cart = update_local_cart(3,cart,{"item":fetch_item_details(this).item_code,"notes":"no notes","qty":fetch_item_details(this).qty,"price":fetch_item_details(this).price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
                 console.log(cart)
 
         }
@@ -95,7 +94,8 @@ if(session_cart){
     
     $(".option").on("change", function() {
         const price = parseFloat($('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('price'));   
-        $(this).closest('tr').find('.price').html(price) 
+        console.log(price)
+        $(this).closest('tr').find('.price').html(price.toFixed(1)) 
     })
 
     /* On change of option change price in table */
@@ -103,25 +103,43 @@ if(session_cart){
 
      /* On change of qty */
 
-    // $(".qty").on("change", function() {
-    //     const item_code = $(this).closest('tr').find('.select_option').find("select.option").val()
-    //     const qty = $(this).val();
-    //     /*console.log( $(this).closest('tr').find('.select_option').find("select.option"))*/
-    //     var existing_stock = $('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('stock');
-    //     /*console.log($(this).val())
-    //     console.log(existing_stock)*/
-    //     if(parseFloat($(this).val()) > parseFloat(existing_stock)){
-    //         alert("This item has only stock")
-    //     }
-
-    //     if($(this).closest('tr').find('input.checkmark')[0].checked){
-
-    //         cart = update_local_cart(3,cart,{"item":item_code,"notes":"no notes","qty":qty})
-    //         console.log(cart)
-    
-    //     }
+    $(".qty").on("change", function() {
+        console.log(fetch_item_details(this))
+        if($(this).val() % 1 === 0){
+           //do nothing
+         } else{
+            console.log($(this).closest('tr').find('.select_option').text().trim())
+            var me = this
+            frappe.call({
+                "method":"frappe.client.get_value",
+                "args":{
+                    "doctype":"UOM",
+                    "filters":{"name":$(this).closest('tr').find('.select_option').text().trim()},
+                    "fieldname":["must_be_whole_number"]
+                },
+                callback:function(r){
+                    if(r.message.must_be_whole_number){
+                        alert("You cannot enter Fraction QTY for this Item")
+                        $(me).val(parseInt($(me).val()))
+                    }
+                }
+            })
+             
+         }
         
-    // })
+        if(parseFloat($(this).val()) > fetch_item_details(this).stock){
+            alert("This item has only "+ fetch_item_details(this).stock +" stock")
+            return 0
+        }
+
+        if($(this).closest('tr').find('input.checkmark')[0].checked){
+
+            cart = update_local_cart(3,cart,{"item":fetch_item_details(this).item_code,"notes":"no notes","qty":fetch_item_details(this).qty,"price":fetch_item_details(this).price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
+            console.log(cart)
+    
+        }
+        
+    })
 
     /* On change of qty */
 
@@ -129,6 +147,7 @@ if(session_cart){
     /* On change of checkbox */
 
     $("input[type='checkbox']").change(function() {
+        console.log(fetch_item_details(this))
         // console.log(frappe.user)
         if(frappe.user == "Guest") {
             alert("Please Login First!")
@@ -136,18 +155,22 @@ if(session_cart){
                 localStorage.setItem("last_visited", window.location.pathname);
             }
             window.location.href = "/login";
+            return 0
         }
         console.log($(this).closest('tr').find('.select_option').find("select.option").val())
-        var item_code = $(this).closest('tr').find('.select_option').find("select.option").val()
-        var additional_notes ="no notes"
-        var qty = parseFloat($(this).closest('tr').find('.qty').val());
-        var price = parseFloat($('option:selected', $(this).closest('tr').find('.select_option').find("select.option")).attr('price'));
-        var cart_total = parseFloat($("#total").text())
+        var item_code = ""
+        if($(this).closest('tr').find('.select_option').find("select.option").val()){
+            item_code = $(this).closest('tr').find('.select_option').find("select.option").val()
+        }else{
+            item_code = $(this).closest('tr').find('.item_name').text()
+        }
+       
+        // var cart_total = parseFloat($("#total").text())
         if(this.checked) {
            
             $(this).closest('tr').find('.select_option').find("select.option").prop('disabled', 'disabled');
 
-            cart = update_local_cart(1,cart,{"item":item_code,"notes":additional_notes,"qty":qty,"price":price,"id":$(this).attr("id")})
+            cart = update_local_cart(1,cart,{"item":fetch_item_details(this).item_code,"notes":"no notes","qty":fetch_item_details(this).qty,"price":fetch_item_details(this).price,"id":$(this).attr("id")})
             console.log(cart)
 
         }else{
@@ -155,7 +178,7 @@ if(session_cart){
             
             $(this).closest('tr').find('.option').prop('disabled', false);
             
-            cart = update_local_cart(2,cart,{"item":item_code,"notes":additional_notes,"qty":qty,"price":price,"id":$(this).attr("id")})
+            cart = update_local_cart(2,cart,{"item":fetch_item_details(this).item_code,"notes":"no notes","qty":fetch_item_details(this).qty,"price":fetch_item_details(this).price,"id":$(this).attr("id")})
             console.log(cart)
            
         }
@@ -211,17 +234,17 @@ function update_local_cart(case_option,cart,ops=null){
             
       }
     
-    var total = 0
-    cart.forEach(element => {
-        total = total + (parseFloat(element.price)*parseFloat(element.qty))
-    });
-    $("#total").text(parseFloat(total))
+    // var total = 0
+    // cart.forEach(element => {
+    //     total = total + (parseFloat(element.price)*parseFloat(element.qty))
+    // });
+    // $("#total").text(parseFloat(total))
 
     // cart.forEach(opts => {
     //     shopping_cart_update (opts)        
     // });
     sessionStorage.setItem("cart",JSON.stringify(cart));
-    sessionStorage.setItem("total", total);
+    // sessionStorage.setItem("total", total);
 
     return cart
 
@@ -305,3 +328,33 @@ function set_cart() {
 }
 
 /* Update erpnext cart function */
+
+
+function fetch_item_details(me){
+
+    var item_code = ""
+    if($(me).closest('tr').find('.select_option').find("select.option").val()){
+        item_code = $(me).closest('tr').find('.select_option').find("select.option").val()
+    }else{
+        item_code = $(me).closest('tr').find('.item_name').text()
+    }
+
+    var qty = parseFloat($(me).closest('tr').find('.counter').val());
+
+    var price = parseFloat($(me).closest('tr').find('.price').text());
+
+    var stock  = 0.00
+    if($('option:selected', $(me).closest('tr').find('.select_option').find("select.option")).attr('stock')){
+        stock =parseFloat($('option:selected', $(me).closest('tr').find('.select_option').find("select.option")).attr('stock'))
+    }else{
+        stock  =  parseFloat($(me).closest('tr').find('.stock').text());
+    }
+   
+
+    return{
+        "item_code":item_code,
+        "qty":qty,
+        "price":price,
+        "stock":stock
+    }
+}

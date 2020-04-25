@@ -29,7 +29,7 @@ class ItemConfigure {
 		});
 
 		this.dialog = new frappe.ui.Dialog({
-			title: __('Configure {0}', [this.item_name]),
+			title: __('Select {0}', [this.item_name]),
 			fields,
 			on_hide: () => {
 				set_continue_configuration();
@@ -298,7 +298,7 @@ function set_continue_configuration() {
 	const { itemCode } = $btn_configure.data();
 
 	if (localStorage.getItem(`configure:${itemCode}`)) {
-		$btn_configure.text(__('Continue Configuration'));
+		$btn_configure.text(__('Continue Selection'));
 	} else {
 		$btn_configure.text(__('Select'));
 	}
