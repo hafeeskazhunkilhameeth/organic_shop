@@ -278,6 +278,7 @@ async function shopping_cart_update (opts) {
                frappe.unfreeze();
                $("#add_to_cart").prop('disabled',false);
                $('#view_cart').removeAttr('hidden');
+               $("input.checkmark:checkbox").prop('checked', false)
                
             }
         });
