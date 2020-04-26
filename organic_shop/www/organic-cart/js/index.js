@@ -279,6 +279,7 @@ async function shopping_cart_update (opts) {
                $("#add_to_cart").prop('disabled',false);
                $('#view_cart').removeAttr('hidden');
                $("input.checkmark:checkbox").prop('checked', false)
+               $("input.counter").val(1)
                
             }
         });

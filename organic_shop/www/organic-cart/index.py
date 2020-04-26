@@ -34,8 +34,8 @@ def get_items():
             in_stock = 0
             for var in variant:
                 price = frappe.db.get_value("Item Price",{"item_code":var.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
-                stock = frappe.db.get_value("Bin",{"item_code":var.name,"warehouse":var.website_warehouse},"actual_qty")
-                if stock != None and stock != 0:
+                stock = frappe.db.get_value("Bin",{"item_code":var.name,"warehouse":var.website_warehouse},"projected_qty")
+                if stock != None and stock > 0:
                     in_stock=1
                 
                 variant_list.append({
@@ -59,8 +59,8 @@ def get_items():
         else:
             in_stock = 0
             price = frappe.db.get_value("Item Price",{"item_code":item.name,"price_list":frappe.db.get_value("Shopping Cart Settings",None,"price_list"),"selling":1},"price_list_rate")
-            stock = frappe.db.get_value("Bin",{"item_code":item.name,"warehouse":item.website_warehouse},"actual_qty")
-            if stock != None and stock != 0:
+            stock = frappe.db.get_value("Bin",{"item_code":item.name,"warehouse":item.website_warehouse},"projected_qty")
+            if stock != None and stock > 0:
                 in_stock=1
             result_items.append({
                 "uom":item.stock_uom,
