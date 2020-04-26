@@ -69,8 +69,8 @@ if(session_cart){
 	$('.vigieCart-tab .down_count').click(function (e) {
         console.log(fetch_item_details(this))
        
-        if(parseFloat(parseFloat($(this).parent().find('.counter').val()) - 1) > fetch_item_details(this).stock){
-            alert("This item has only "+ fetch_item_details(this).stock +" stock")
+        if(parseFloat(parseFloat($(this).parent().find('.counter').val()) - 1) < 1){
+            alert("Minimum Quantity Should be 1")
             return 0
         }else{
             $(this).parent().find('.counter').val(parseFloat($(this).parent().find('.counter').val()) - 1);
