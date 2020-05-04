@@ -28,15 +28,15 @@ if(cart_count != 0) {
     
     /* Item group Filter */
 
-  $("tr").filter(".item."+$($("#item_group tr")[0]).find('.vigieCart-anchor').text()).css("display", "table-row") ;   
-  $("tr").filter(".item:not(."+$($("#item_group tr")[0]).find('.vigieCart-anchor').text()+")").css("display", "none") ;
+  $("tr").filter(".item."+$($("#item_group tr")[0]).find('.vigieCart-anchor').attr("route")).css("display", "table-row") ;   
+  $("tr").filter(".item:not(."+$($("#item_group tr")[0]).find('.vigieCart-anchor').attr("route")+")").css("display", "none") ;
   $($("#item_group tr")[0]).find('.vigieCart-anchor').addClass("active");
   $("#item_group").on("click", "td", function() {
 
     $("#item_group a").removeClass("active"); 
     if($( this ).text() != "All"){
-        $("tr").filter(".item."+$( this ).text()).css("display", "table-row") ;   
-        $("tr").filter(".item:not(."+$( this ).text()+")").css("display", "none") ;
+        $("tr").filter(".item."+$( this ).find('.vigieCart-anchor').attr("route")).css("display", "table-row") ;   
+        $("tr").filter(".item:not(."+$( this ).find('.vigieCart-anchor').attr("route")+")").css("display", "none") ;
     }else{
         $("tr").filter(".item").css("display", "table-row") ; 
     }

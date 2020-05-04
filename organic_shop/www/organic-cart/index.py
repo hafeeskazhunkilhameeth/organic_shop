@@ -14,7 +14,7 @@ def get_context(context):
     context.session = frappe.session
     context.user = frappe.session.user
     context.csrf_token = frappe.sessions.get_csrf_token()
-    context.item_group = frappe.get_all('Item Group', filters={"show_in_website":1,"is_group":0}, fields=["name","weightage"], order_by='weightage desc')
+    context.item_group = frappe.get_all('Item Group', filters={"show_in_website":1,"is_group":0}, fields=["name","weightage","route"], order_by='weightage desc')
     
     # context.item = frappe.get_all("Item",filters={"show_in_website":1},fields=["name","image","item_group"])
     context.item_result = get_items()
@@ -54,7 +54,8 @@ def get_items():
                 "image":item.image,
                 "variant":variant_list,
                 "item_group":item.item_group,
-                "in_stock":in_stock
+                "in_stock":in_stock,
+                "item_group_route":frappe.db.get_value("Item Group",item.item_group,"route")
             })
         else:
             in_stock = 0
@@ -73,7 +74,8 @@ def get_items():
                 "stock":stock,
                 "price":price,
                 "item_group":item.item_group,
-                "in_stock":in_stock
+                "in_stock":in_stock,
+                "item_group_route":frappe.db.get_value("Item Group",item.item_group,"route")
             })
 
     return result_items

@@ -261,7 +261,9 @@
                                     </tr> -->
                                     {% for item in item_group %}
                                     <tr>
-                                        <td><a class="vigieCart-anchor" href="#" data-toggle="tab" >{{item.name}}</a></td>
+                                        {% set id = item.route.split('/') %}
+                                        {% set list_index = id|length - 1 %}
+                                        <td><a class="vigieCart-anchor" href="#" data-toggle="tab" route = "{{id[list_index]}}">{{item.name}}</a></td>
                                     </tr>
                                     {% endfor %}
                                     
@@ -285,7 +287,9 @@
                                     <tbody>
                                         {% for it in item_result %}
                                         {% if it.in_stock == 1 %}
-                                       <tr class="item {{it.item_group}} disable-content">
+                                        {% set id = it.item_group_route.split('/') %}
+                                        {% set list_index = id|length - 1 %}
+                                       <tr class="item {{id[list_index]}} disable-content">
                                         <!-- if product is out of stock 001 start-->
 										  <!-- <td colspan="6" style="padding: 0;" >
 												<table>
