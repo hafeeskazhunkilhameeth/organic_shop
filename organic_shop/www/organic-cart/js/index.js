@@ -105,6 +105,11 @@ if(cart_count != 0) {
 
     $(".qty").on("change", function() {
         console.log(fetch_item_details(this))
+        if($(this).val() == NaN || $(this).val() == 0){
+            alert("Quantity can not be Empty or Zero!")
+            $(this).val(1)
+            
+        }
         if($(this).val() % 1 === 0){
            //do nothing
          } else{
@@ -147,7 +152,7 @@ if(cart_count != 0) {
     /* On change of checkbox */
 
     $("input[type='checkbox']").change(function() {
-        console.log(fetch_item_details(this))
+        // console.log(fetch_item_details(this))
         // console.log(frappe.user)
         if(frappe.user == "Guest") {
             alert("Please Login First!")
@@ -157,7 +162,12 @@ if(cart_count != 0) {
             window.location.href = "/login";
             return 0
         }
-        console.log($(this).closest('tr').find('.select_option').find("select.option").val())
+        if(fetch_item_details(this).qty == NaN || fetch_item_details(this).qty == 0){
+            alert("Quantity can not be Empty or Zero!")
+            $(this).val(1)
+            
+        }
+        console.log(fetch_item_details(this).qty)
         var item_code = ""
         if($(this).closest('tr').find('.select_option').find("select.option").val()){
             item_code = $(this).closest('tr').find('.select_option').find("select.option").val()
@@ -200,6 +210,7 @@ if(cart_count != 0) {
             });
             shopping_cart_update(cart_item)
             cart = [];
+            $('.option').prop('disabled', false);
 
         }else{
 
