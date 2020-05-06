@@ -103,32 +103,36 @@ if(cart_count != 0) {
 
      /* On change of qty */
 
-    $(".qty").on("change", function() {
-        console.log(fetch_item_details(this))
-        if($(this).val() == NaN || $(this).val() == 0){
-            alert("Quantity can not be Empty or Zero!")
-            $(this).val(1)
+    $(".qty").keyup(function (e) { 
+        var me = this
+        if($(this).val() % 1 != 0){
+            if(countDecimals($(this).val()) > 3){
+                alert("Decimal Value allowed till 3 points")
+                $(this).val(parseFloat($(me).val()).toFixed(3))
+            }
             
+        }
+        
+    });
+
+    $(".qty").on("change", async function() {
+        // console.log(fetch_item_details(this))
+        if($(this).val() == NaN || $(this).val() <= 0){
+            alert("Quantity can not be Empty or Zero or Minus!")
+            $(this).val(1)
+            return 0
         }
         if($(this).val() % 1 === 0){
            //do nothing
          } else{
             console.log($(this).closest('tr').find('.select_option').text().trim())
+            let must_whole = await fetch_uom_property($(this).closest('tr').find('.select_option').text().trim())
             var me = this
-            frappe.call({
-                "method":"frappe.client.get_value",
-                "args":{
-                    "doctype":"UOM",
-                    "filters":{"name":$(this).closest('tr').find('.select_option').text().trim()},
-                    "fieldname":["must_be_whole_number"]
-                },
-                callback:function(r){
-                    if(r.message.must_be_whole_number){
-                        alert("You cannot enter Fraction QTY for this Item")
-                        $(me).val(parseInt($(me).val()))
-                    }
-                }
-            })
+            if(must_whole.message.must_be_whole_number){
+                alert("Quantity must be whole number")
+                $(this).val(parseInt($(me).val()))
+            }
+            
              
          }
         
@@ -139,7 +143,7 @@ if(cart_count != 0) {
 
         if($(this).closest('tr').find('input.checkmark')[0].checked){
 
-            cart = update_local_cart(3,cart,{"item":fetch_item_details(this).item_code,"notes":"no notes","qty":fetch_item_details(this).qty,"price":fetch_item_details(this).price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
+            cart = update_local_cart(3,cart,{"item":fetch_item_details(this).item_code,"notes":"no notes","qty":$(this).val(),"price":fetch_item_details(this).price,"id":$(this).closest('tr').find('input.checkmark').attr("id")})
             console.log(cart)
     
         }
@@ -162,8 +166,8 @@ if(cart_count != 0) {
             window.location.href = "/login";
             return 0
         }
-        if(fetch_item_details(this).qty == NaN || fetch_item_details(this).qty == 0){
-            alert("Quantity can not be Empty or Zero!")
+        if(fetch_item_details(this).qty == NaN || fetch_item_details(this).qty <= 0){
+            alert("Quantity can not be Empty or Zero or Minus!")
             $(this).val(1)
             
         }
@@ -388,4 +392,26 @@ function fetch_item_details(me){
         "price":price,
         "stock":stock
     }
+}
+
+function fetch_uom_property(uom){
+    return new Promise(function (resolve, reject) {
+        try {
+            frappe.call({
+                "method":"frappe.client.get_value",
+                "args":{
+                    "doctype":"UOM",
+                    "filters":{"name":uom},
+                    "fieldname":["must_be_whole_number"]
+                },
+                callback:resolve
+                
+            })
+        } catch (e) { reject(e); }
+    });
+}
+
+function countDecimals (value) {
+    if(Math.floor(value) === value) return 0;
+    return value.toString().split(".")[1].length || 0; 
 }
