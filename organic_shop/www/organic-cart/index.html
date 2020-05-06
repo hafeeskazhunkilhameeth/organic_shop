@@ -313,7 +313,7 @@
                                                     
                                                     
                                                       {% for var in it.variant %}
-                                                      {% if (var.stock != None and var.stock|float != 0.0) %}
+                                                      {% if (var.stock != None and var.stock|float != 0.0 and var.stock|float > 0.0) %}
                                                       <option value="{{var.variant}}" stock="{{var.stock}}" price="{{var.price}}">{{var.variant_name}}</option>
                                                       {% endif %}
                                                       {% endfor %}
