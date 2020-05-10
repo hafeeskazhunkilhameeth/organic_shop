@@ -13,8 +13,8 @@ a.vigieCart-anchor{
 	border: 1px solid #ddd;
 }
 a.vigieCart-anchor:hover, a.vigieCart-anchor.active{
-	background-color: #f9b600;
-    border-color: #f9b600;
+	background-color: #69bd45;
+    border-color: #69bd45;
     color: #ffffff;
 }
 a.vigieCart-anchor.active:after {
@@ -26,7 +26,7 @@ a.vigieCart-anchor.active:after {
     border-left: 0;
     border-bottom: 13px solid transparent;
     border-top: 13px solid transparent;
-    border-left: 10px solid #f9b600;
+    border-left: 10px solid #69bd45;
 }
 .product-table td.image{
 	padding: 10px;
@@ -53,7 +53,7 @@ a.vigieCart-anchor.active:after {
     right: 0;
     bottom: 0;
     padding: 0 .5em;
-    background: #f9b600;
+    background: #69bd45;
     pointer-events: none;
     height: 33px;
     line-height: 33px;
@@ -79,7 +79,7 @@ select.select4opt{
     font-size: 12px;
     outline: 0;
     box-shadow: none;
-    border: 1px solid #f9b600 !important;
+    border: 1px solid #69bd45 !important;
     border-radius: 2px;
     background: none;
     vertical-align: top;
@@ -93,8 +93,8 @@ td.cart_unit .main {
     width: 33px;
     margin: 0 -5px!important;
     vertical-align: top;
-    background: #f9b600 !important;
-    border: 1px solid #f9b600 !important;
+    background: #69bd45 !important;
+    border: 1px solid #69bd45 !important;
     position: relative;
     border-radius: 2px;
 	color: #fff !important;
@@ -133,20 +133,52 @@ td.cart_unit .main {
     text-align: center;
 }
 .custom-vegie input[type=checkbox]:checked+label:before {
-    background-color: #f9b600;
-    border-color: #f9b600;
+    background-color: #69bd45;
+    border-color: #69bd45;
     color: #fff;
 }
-.stick-element {
+.stick-element  {
     padding: 18px !important;
     background: #dedede;
 }
 
+.item .naturalimg{
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	max-width: 175px
+}
+.pad-o {
+    padding: 0 !important;
+}
+.feature-wrap > p{
+	min-height: 70px;	
+}
+.quality-caption p{
+	min-height: 70px;
+}
+.footer-widget ul li{
+	    display: block;
+	font-size: 14px;
+
+}
+.cf:before, .cf:after {
+    content: " ";
+    display: table;
+}
 @media (min-width:990px){
 	.stick-element {
-		position: -webkit-sticky;
 		position: sticky;
+		position: -webkit-sticky;
 		top: 90px;
+		float: left;
+	}
+	.stick-element2 {
+		
+		position: sticky;
+		position: -webkit-sticky;
+		top: 90px;
+		float: left;
 	}
 }
 h3.price {
@@ -169,6 +201,11 @@ button.btn.btn-success.custom_add2cart {
 }
 .navbar {
 	margin-bottom: 0;
+	 min-height: 75px;
+	padding-top: 00;
+}
+.navbar .navbar-brand{
+	height: 63px;
 }
 .dropdown-toggle::after{
 	display: none;
@@ -181,6 +218,22 @@ button.btn.btn-success.custom_add2cart {
     line-height: 20px;
     padding: 5px 10px;
 }
+.collapse.navbar-collapse{
+	padding-top: 10px;
+}
+.food-quality-img img{
+	vertical-align: middle;
+}
+
+.quality-caption .title-1{
+	margin-bottom: 0;
+	margin-top: 19px;
+    line-height: 16px;
+}
+.quality-caption .divider-2{
+	margin: 2px auto;
+}
+
 @media (max-width:990px){
 	.stick-element {
 		margin-top: 15px;
