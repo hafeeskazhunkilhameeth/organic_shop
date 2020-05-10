@@ -29,7 +29,7 @@ def get_items():
 
     for item in items:
         if item.has_variants == 1:
-            variant = frappe.db.sql("""select name,item_name,item_group,website_warehouse from `tabItem` it where it.variant_of = %s""",item.name,as_dict = 1)
+            variant = frappe.db.sql("""select name,item_name,item_group,website_warehouse from `tabItem` it where it.variant_of = %s and it.show_variant_in_website = 1""",item.name,as_dict = 1)
             variant_list = []
             in_stock = 0
             for var in variant:
