@@ -25,7 +25,7 @@ def get_context(context):
 
 def get_items():
     result_items = []
-    items = frappe.db.sql(""" select name,stock_uom,item_name,route,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1 and it.is_sales_item = 1""",as_dict = 1)
+    items = frappe.db.sql(""" select name,stock_uom,item_name,route,has_variants,item_group,website_warehouse,image from `tabItem` it where it.show_in_website = 1 and it.is_sales_item = 1 and it.variant_of is null """,as_dict = 1)
 
     for item in items:
         if item.has_variants == 1:
