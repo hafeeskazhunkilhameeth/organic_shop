@@ -27,8 +27,8 @@
         <title>Naturix</title>
         
         <!-- Favicon -->
-        <link rel="apple-touch-icon" sizes="144x144" href="app-assets/ico/apple-touch-icon-144-precomposed.png">
-        <link rel="shortcut icon" href="app-assets/ico/favicon.ico">
+        <link rel="apple-touch-icon" sizes="144x144" href="/files/icon.png">
+        <link rel="shortcut icon" href="/files/icon.png">
         {% if head_html is defined -%}
 		{{ head_html or "" }}
 		{%- endif %}
@@ -263,7 +263,7 @@
                                     <tr>
                                         {% set id = item.route.split('/') %}
                                         {% set list_index = id|length - 1 %}
-                                        <td><a class="vigieCart-anchor" href="#" data-toggle="tab" route = "{{id[list_index]}}">{{item.name}}</a></td>
+                                        <td><a class="vigieCart-anchor" href="#quickshop" data-toggle="tab" route = "{{id[list_index]}}">{{item.name}}</a></td>
                                     </tr>
                                     {% endfor %}
                                     
@@ -806,6 +806,16 @@ Secunderabad-500017 </span> </li>
 					$('html, body').animate({
 						scrollTop: $("#quickshop").offset().top - 100
 					}, 2000);
+				});
+				$("#item_group a[href='#quickshop']").click(function(){
+					setTimeout(function() {
+						if($("table.product-table").height()>50){
+							$('html, body').animate({
+								scrollTop: $("#quickshop").offset().top - 100
+							}, 500);
+						}
+					}, 500);
+					
 				});
 			});
 			
