@@ -285,6 +285,7 @@
                                     </thead>
                                     <tbody>
                                         {% for it in item_result %}
+                                        {% set pro_price = [] %}
                                         {% if it.in_stock == 1 %}
                                         {% set id = it.item_group_route.split('/') %}
                                         {% set list_index = id|length - 1 %}
@@ -310,10 +311,11 @@
                                             <div class="search-selectpicker  select">
                                                 <select class="option select4opt input-price" >
                                                     
-                                                    
+
                                                       {% for var in it.variant %}
                                                       {% if (var.stock != None and var.stock|float != 0.0 and var.stock|float > 0.0) %}
                                                       <option value="{{var.variant}}" stock="{{var.stock}}" price="{{var.price}}">{{var.variant_name}}</option>
+                                                      {{pro_price.append(var.price)}}
                                                       {% endif %}
                                                       {% endfor %}
                                                     </select>
@@ -334,8 +336,8 @@
                                             
                                             {% if (it.has_variant == 1 ) %}
                                                 {% if it.variant|length > 0 %}
-                                                    {% if it.variant[0].price %}
-                                                    {{it.variant[0].price}}
+                                                    {% if pro_price[0] %}
+                                                    {{pro_price[0]}}
                                                     {% else %}
                                                     0.00
                                                     {% endif %}
