@@ -6,9 +6,11 @@ Customization for a Organic Shop
 #### Custom App
 Custom app : https://github.com/ashish-greycube/organic_shop
 
-Organic-cart pages : /home/frappe/frappe-bench/apps/organic_shop/organic_shop/www/organic-cart
+Organic-cart pages : organic_shop/organic_shop/www/organic-cart
 
-Website theme  : Website Theme Naturix
+Manual Setup : all available at organic_shop/organic_shop/public/manual_setup
+
+Website theme  : Website Theme Naturix + Custom JS
 
 Website Settings : Brand , Theme , Top Bar, Footer (via SQL Db)
 
