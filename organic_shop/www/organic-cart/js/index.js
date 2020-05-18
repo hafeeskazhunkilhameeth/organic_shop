@@ -146,6 +146,7 @@ if(cart_count != 0) {
         
         if(parseFloat($(this).val()) > fetch_item_details(this).stock){
             alert("This item has only "+ fetch_item_details(this).stock +" stock")
+            $(this).val(fetch_item_details(this).stock)
             return 0
         }
 

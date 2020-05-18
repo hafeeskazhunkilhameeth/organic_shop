@@ -123,12 +123,17 @@ def update_cart_custom(items=[],with_items=True):
         else:
             # quotation.items = []
             for item in cart_items:
-                quotation.append("items", {
-				"doctype": "Quotation Item",
-				"item_code": item['item_code'],
-				"qty": item['qty'],
-				# "additional_notes": item['additional_notes']
-			})
+                quotation_items = quotation.get("items", {"item_code": item['item_code']})
+                if not quotation_items:
+                    quotation.append("items", {
+					"doctype": "Quotation Item",
+					"item_code": item['item_code'],
+					"qty": item['qty'],
+					# "additional_notes": item['additional_notes']
+					})
+                else:
+                    quotation_items[0].qty = item['qty']
+                    # quotation_items[0].additional_notes = item['additional_notes']
 
     apply_cart_settings(quotation=quotation)
 
