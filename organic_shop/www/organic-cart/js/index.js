@@ -129,8 +129,16 @@ if(cart_count != 0) {
             let must_whole = await fetch_uom_property($(this).closest('tr').find('.select_option').text().trim())
             var me = this
             if(must_whole.message.must_be_whole_number){
-                alert("Quantity must be whole number")
+               //alert("Quantity must be whole number")
+               if(parseInt($(me).val()) == 0)
+               {
+                  $(this).val(1)
+               }
+               else 
+               {
                 $(this).val(parseInt($(me).val()))
+               }
+               alert("Quantity must be whole number")
             }
             
              
