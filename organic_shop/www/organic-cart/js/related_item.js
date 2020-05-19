@@ -2,8 +2,8 @@ $(document).ready(function () {
     console.log("document.location.href : "+window.location.host);
     console.log("document.location.pathname : "+document.location.pathname);
     var webhref_part = document.location.pathname.split('/')
-    var item_group = webhref_part[2]
-    var item = webhref_part[3].split("-")[0]
+    var item_group = webhref_part[1]
+    var item = window.item_code = $('[itemscope] [itemprop="productID"]').text().trim();
     console.log(item_group)
     cart.list({
         "doctype":"Item",
