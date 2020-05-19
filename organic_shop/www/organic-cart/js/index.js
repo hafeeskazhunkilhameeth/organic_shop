@@ -1,4 +1,4 @@
-$(document).ready(function () {
+-$(document).ready(function () {
 /* Session Function */
 var cart = [];
 // var session_cart = sessionStorage.getItem("cart");
@@ -125,12 +125,14 @@ if(cart_count != 0) {
         if($(this).val() % 1 === 0){
            //do nothing
          } else{
-            console.log($(this).closest('tr').find('.select_option').text().trim())
+           // console.log($(this).closest('tr').find('.select_option').text().trim())
+           
             let must_whole = await fetch_uom_property($(this).closest('tr').find('.select_option').text().trim())
             var me = this
+           
             if(must_whole.message.must_be_whole_number){
                //alert("Quantity must be whole number")
-               if(parseInt($(me).val()) == 0)
+               if(isNaN(parseInt($(me).val())) || parseInt($(me).val()) == 0)
                {
                   $(this).val(1)
                }
