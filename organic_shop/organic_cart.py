@@ -132,7 +132,12 @@ def update_cart_custom(items=[],with_items=True):
 					# "additional_notes": item['additional_notes']
 					})
                 else:
-                    quotation_items[0].qty = item['qty']
+                    item_warehouse = frappe.db.get_value("Item",item['item_code'],"website_warehouse")
+                    stock = frappe.db.get_value("Bin",{"item_code":item['item_code'],"warehouse":item_warehouse},"projected_qty")
+                    if stock < ( item['qty'] + quotation_items[0].qty):
+                        frappe.msgprint("Item "+"<b>"+str(item['item_code'])+"</b>"+" has only "+"<b>"+str(stock)+"</b>"+" stock")
+                    else:
+                        quotation_items[0].qty = item['qty'] + quotation_items[0].qty
                     # quotation_items[0].additional_notes = item['additional_notes']
 
     apply_cart_settings(quotation=quotation)
