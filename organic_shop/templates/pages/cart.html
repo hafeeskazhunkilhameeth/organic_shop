@@ -88,7 +88,13 @@
 			</script>
 		</div>
 	{% endif %}
-
+	<div class="mt-5">
+		<select name="delivery_option" id="delivery_option">
+			<option value="" selected disabled>Select Delivery Option</option>
+			<option value="Home Delevery">Home Delevery</option>
+			<option value="Self Pickup">Self Pickup</option>
+		</select>
+	</div>
 	<div class="cart-addresses mt-5">
 	{% include "templates/includes/cart/cart_address.html" %}
 	</div>

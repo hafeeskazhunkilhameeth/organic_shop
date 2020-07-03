@@ -642,3 +642,9 @@ def apply_coupon_code(applied_code,applied_referral_sales_partner):
 	else:
 		frappe.throw(_("Please enter coupon code !!"))
 	return quotation
+
+@frappe.whitelist(allow_guest=True)
+def del_quotation():
+	quote = _get_cart_quotation()
+	delete_cart = frappe.delete_doc("Quotation",quote.name)
+	return delete_cart

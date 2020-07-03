@@ -108,7 +108,6 @@
                             <span class="medium-font">ORGANIC STORE</span>
                         </div>
                     </div>
-
                     <div class="col-lg-6 responsive-menu">  
                         <div class="responsive-toggle fa fa-bars"> </div>
                         <nav class="fix-navbar" id="primary-navigation">            
@@ -122,7 +121,6 @@
                             </ul>                           
                         </nav>
                     </div>
-
                 </div>  
             </header> -->
             <!-- / Main Header Ends -->   
@@ -272,8 +270,23 @@
                             </div>
                         </div>
                         <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 pad-o vigieCart-tab tab-content cf">
+                            
                             <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-1-rgt pad-resp-r">
-                                
+                                <select name="warehouse" id="warehouse" class="select_warehouse">
+                                    {% if cust_def_warehouse[0] != 2 %}
+                                        <option value="{{cust_def_warehouse[0]}}" selected>{{cust_def_warehouse[1]}}</option>
+                                    {% else %}
+                                        <option value="" disabled selected>Select warehouse</option>
+                                    {% endif %}
+                                    <!-- <option value="" disabled selected>Select warehouse</option> -->
+                                    {% for item in warehouse %}
+                                    {% if item.name != cust_def_warehouse[0] %}
+                                    <option value="{{item.name}}">{{item.warehouse_name}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-1-rgt pad-resp-r">                                
                                 <table class="product-table table-bordered">
                                     <thead class="">
                                        <tr>
@@ -754,31 +767,78 @@ Secunderabad, Telangana - 500017 </span> </li>
         </section>
         <!-- / Product Preview Popup -->
 
-        <!-- Subscribe Popup-Dark -->
-        <!-- <section id="subscribe-popups" class="subscribe-me popups-wrap">                
+        <section id="storechange-popup" class="subscribe-me popups-wrap sb">                
             <div class="modal-content">   
-                <button type="button" class="sb-close-btn close popup-cls"> <i class="fa-times fa clr-txt"></i> </button>
+                <!-- <button type="button" class="sb-close-btn close popup-cls"> <i class="fa-times fa clr-txt"></i> </button> -->
                 <div class="subscribe-wrap">                                                                   
                     <div class="main-logo">
                         <a href="index.html"> <img alt="" src="app-assets/img/logo/main-logo.png" />  </a>
                     </div>
-
                     <div class="title-wrap">
-                        <h2 class="section-title"> <strong>Subscribe Newsletter</strong> </h2>
-                        <h4 class="fsz-12"> Join our newsletter for free & get latest news weekly </h4>
+                        <h4 class="fsz-12">While Changing store your previous cart will be empty, Are you sure want to change the Store?</h4>
                     </div>
-
                     <form class="newsletter-form">
-                        <div class="form-group">
-                            <input class="form-control" placeholder="enter your email address" required="" type="text">                                                                                     
+                        <div class="sort-dropdown">
+                            <div class="search-selectpicker selectpicker-wrapper">
+                                
+                            </div>
                         </div>
-                        <div class="form-group">                                               
-                            <button class="theme-btn upper-text" type="submit"> <strong> subscribe </strong> </button>                                            
+                        <div class="form-group"> 
+                            <a href="#" class="theme-btn btn" id="change_store_yes"> <strong>YES</strong> </a>                                              
+                            <!-- <button class="theme-btn upper-text" id="set_warehouse"> <strong> Select Store </strong> </button>                                             -->
+                        </div>
+                        <div class="form-group"> 
+                            <a href="#" class="theme-btn btn" id="change_store_no"> <strong>NO</strong> </a>                                              
+                            <!-- <button class="theme-btn upper-text" id="set_warehouse"> <strong> Select Store </strong> </button>                                             -->
                         </div>
                     </form>
                 </div>
             </div>
-        </section> -->
+        </section>
+        <!-- Subscribe Popup-Dark -->
+        <section id="warehouse-popup" class="subscribe-me popups-wrap sb">                
+            <div class="modal-content">   
+                <!-- <button type="button" class="sb-close-btn close popup-cls"> <i class="fa-times fa clr-txt"></i> </button> -->
+                <div class="subscribe-wrap">                                                                   
+                    <div class="main-logo">
+                        <a href="index.html"> <img alt="" src="app-assets/img/logo/main-logo.png" />  </a>
+                    </div>
+                    <div class="title-wrap">
+                        <h2 class="section-title"> <strong>Subscribe Newsletter</strong> </h2>
+                        <h4 class="fsz-12">Select Your Nearest Store</h4>
+                    </div>
+                    <form class="newsletter-form">
+                        <div class="sort-dropdown">
+                            <div class="search-selectpicker selectpicker-wrapper">
+                                <!-- <select class="selectpicker" id="warehouse_value"  data-width="100%"
+                                        data-toggle="tooltip">
+                                    <option value="Adajan Store - A">Adajan</option>
+                                    <option value="Stores - A">Stores</option>
+                                </select> -->
+                                <select name="warehouse" class="selectpicker" id="sel_ware_pop" data-width="100%"
+                                data-toggle="tooltip">
+                                    {% if cust_def_warehouse[0] != 2 %}
+                                        <option value="{{cust_def_warehouse[0]}}" selected>{{cust_def_warehouse[1]}}</option>
+                                    {% else %}
+                                        <option value="" disabled selected>Select warehouse</option>
+                                    {% endif %}
+                                    <!-- <option value="" disabled selected>Select warehouse</option> -->
+                                    {% for item in warehouse %}
+                                    {% if item.name != cust_def_warehouse[0] %}
+                                    <option value="{{item.name}}">{{item.warehouse_name}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group"> 
+                            <a href="#" class="theme-btn btn" id="set_warehouse"> <strong> Select Store </strong> </a>                                              
+                            <!-- <button class="theme-btn upper-text" id="set_warehouse"> <strong> Select Store </strong> </button>                                             -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
         <!-- / Subscribe Popup-Dark -->
 
         <!-- JS Global -->
