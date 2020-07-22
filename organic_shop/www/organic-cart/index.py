@@ -23,6 +23,7 @@ def get_context(context):
     context.item_result = get_items()
     context.update(get_cart_quotation())
     context.no_cache = 1
+    
 
     return context
 

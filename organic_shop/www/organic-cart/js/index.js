@@ -1,4 +1,5 @@
--$(document).ready(async function () {
+$(document).ready(async function () {
+    console.log("not here")
     console.log(frappe)
     let exist_warehouse = await warehouse_selection()
     console.log(exist_warehouse.message)
@@ -251,8 +252,8 @@
     
         /* Add to cart click event */
 
-        $("#warehouse").change(async function(){
-            alert("change")
+        $("#warehouse").change(function(){
+            
             // let cart = await empty_cart()
             // console.log(cart)
 
@@ -261,11 +262,11 @@
             //     location.reload();
             // }
 
-            var subscribe_popup = $('#storechange-popup');
-    
-            subscribe_popup.subscribeBetter({
-                trigger: "onidle", // You can choose which kind of trigger you want for the subscription modal to appear. Available triggers are "atendpage" which will display when the user scrolls to the bottom of the page, "onload" which will display once the page is loaded, and "onidle" which will display after you've scrolled.
-                animation: "flyInDown", // You can set the entrance animation here. Available options are "fade", "flyInRight", "flyInLeft", "flyInUp", and "flyInDown". The default value is "fade".
+            $('#warehouse-popup').remove();
+			
+            $('#storechangepopup').subscribeBetter({
+                trigger: "onloaded", // You can choose which kind of trigger you want for the subscription modal to appear. Available triggers are "atendpage" which will display when the user scrolls to the bottom of the page, "onload" which will display once the page is loaded, and "onidle" which will display after you've scrolled.
+                animation: "fade", // You can set the entrance animation here. Available options are "fade", "flyInRight", "flyInLeft", "flyInUp", and "flyInDown". The default value is "fade".
                 delay: 0, // You can set the delay between the trigger and the appearance of the modal window. This works on all triggers. The value should be in milliseconds. The default value is 0.
                 showOnce: true, // Toggle this to false if you hate your users. :)
                 autoClose: false, // Toggle this to true to automatically close the modal window when the user continue to scroll to make it less intrusive. The default value is false.
@@ -525,8 +526,8 @@
     function get_warehouse_detail(){
         var subscribe_popups = $('#warehouse-popup');
     
-        subscribe_popups.subscribeBetter({
-            trigger: "onidle", // You can choose which kind of trigger you want for the subscription modal to appear. Available triggers are "atendpage" which will display when the user scrolls to the bottom of the page, "onload" which will display once the page is loaded, and "onidle" which will display after you've scrolled.
+        $('#warehouse-popup').subscribeBetter({
+            trigger: "onload", // You can choose which kind of trigger you want for the subscription modal to appear. Available triggers are "atendpage" which will display when the user scrolls to the bottom of the page, "onload" which will display once the page is loaded, and "onidle" which will display after you've scrolled.
             animation: "flyInDown", // You can set the entrance animation here. Available options are "fade", "flyInRight", "flyInLeft", "flyInUp", and "flyInDown". The default value is "fade".
             delay: 0, // You can set the delay between the trigger and the appearance of the modal window. This works on all triggers. The value should be in milliseconds. The default value is 0.
             showOnce: true, // Toggle this to false if you hate your users. :)
