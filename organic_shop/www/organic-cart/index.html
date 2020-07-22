@@ -270,22 +270,25 @@
                             </div>
                         </div>
                         <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 pad-o vigieCart-tab tab-content cf">
-                            
+                            {% if frappe.user != "Guest" %}
                             <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-1-rgt pad-resp-r">
-                                <select name="warehouse" id="warehouse" class="select_warehouse">
-                                    {% if cust_def_warehouse[0] != 2 %}
-                                        <option value="{{cust_def_warehouse[0]}}" selected>{{cust_def_warehouse[1]}}</option>
-                                    {% else %}
-                                        <option value="" disabled selected>Select warehouse</option>
-                                    {% endif %}
-                                    <!-- <option value="" disabled selected>Select warehouse</option> -->
-                                    {% for item in warehouse %}
-                                    {% if item.name != cust_def_warehouse[0] %}
-                                    <option value="{{item.name}}">{{item.warehouse_name}}</option>
-                                    {% endif %}
-                                    {% endfor %}
-                                </select>
+                                <label for="warehouse">Selected Warehouse : </label><div class="search-selectpicker selectpicker-wrapper" style="padding: 10px;">
+                                    <select name="warehouse" id="warehouse" class="select_warehouse selectpicker">
+                                        {% if cust_def_warehouse[0] != 2 %}
+                                            <option value="{{cust_def_warehouse[0]}}" selected>{{cust_def_warehouse[1]}}</option>
+                                        {% else %}
+                                            <option value="" disabled selected>Select warehouse</option>
+                                        {% endif %}
+                                        <!-- <option value="" disabled selected>Select warehouse</option> -->
+                                        {% for item in warehouse %}
+                                        {% if item.name != cust_def_warehouse[0] %}
+                                        <option value="{{item.name}}">{{item.warehouse_name}}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
+                            {% endif %}
                             <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-1-rgt pad-resp-r">                                
                                 <table class="product-table table-bordered">
                                     <thead class="">

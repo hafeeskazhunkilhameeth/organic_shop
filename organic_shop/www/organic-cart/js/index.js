@@ -252,45 +252,43 @@ $(document).ready(async function () {
     
         /* Add to cart click event */
 
-        $("#warehouse").change(function(){
+        $("#warehouse").change(async function(){
             
-            // let cart = await empty_cart()
-            // console.log(cart)
-
-            // let set_val = await set_warehouse($(this).val())
-            // if(set_val.message.nearest_company_warehouse_cf == $(this).val()){
-            //     location.reload();
-            // }
-
-            $('#warehouse-popup').remove();
-			
-            $('#storechangepopup').subscribeBetter({
-                trigger: "onloaded", // You can choose which kind of trigger you want for the subscription modal to appear. Available triggers are "atendpage" which will display when the user scrolls to the bottom of the page, "onload" which will display once the page is loaded, and "onidle" which will display after you've scrolled.
-                animation: "fade", // You can set the entrance animation here. Available options are "fade", "flyInRight", "flyInLeft", "flyInUp", and "flyInDown". The default value is "fade".
-                delay: 0, // You can set the delay between the trigger and the appearance of the modal window. This works on all triggers. The value should be in milliseconds. The default value is 0.
-                showOnce: true, // Toggle this to false if you hate your users. :)
-                autoClose: false, // Toggle this to true to automatically close the modal window when the user continue to scroll to make it less intrusive. The default value is false.
-                scrollableModal: false      //  If the modal window is long and you need the ability for the form to be scrollable, toggle this to true. The default value is false.
+            if(frappe.get_cookie("cart_count") != 0){
+                $('#warehouse-popup').remove();
+                $('#storechangepopup').subscribeBetter({
+                    trigger: "onloaded",
+                    animation: "fade",
+                    delay: 0, 
+                    showOnce: true, 
+                    autoClose: false, 
+                    scrollableModal: false
             });
+            }else{
+                let set_val = await set_warehouse($(this).val())
+                if(set_val.message.nearest_company_warehouse_cf == $(this).val()){
+                    location.reload();
+                }
+            }
+
+            
     
         })
         $("#set_warehouse").click(async function(){
             console.log("here")
-            
             let set_val = await set_warehouse($('#sel_ware_pop').val())
             console.log(set_val)
             if(set_val.message.nearest_company_warehouse_cf == $('#sel_ware_pop').val()){
                 location.reload();
+            }  
+        })
+        $("#change_store_yes").click(async function(){
+            let empty = await empty_cart()
+            let set_val = await set_warehouse($("#warehouse").val())
+            if(set_val.message.nearest_company_warehouse_cf == $("#warehouse").val()){
+                location.reload();
             }
-            
-            // if(set_val.message == 1){
-            //     location.reload();
-                
-            // }    
-        }
-
-        )
-        
+        })
         });
     
     
@@ -323,17 +321,6 @@ $(document).ready(async function () {
                 
           }
         
-        // var total = 0
-        // cart.forEach(element => {
-        //     total = total + (parseFloat(element.price)*parseFloat(element.qty))
-        // });
-        // $("#total").text(parseFloat(total))
-    
-        // cart.forEach(opts => {
-        //     shopping_cart_update (opts)        
-        // });
-        // sessionStorage.setItem("cart",JSON.stringify(cart));
-        // sessionStorage.setItem("total", total);
     
         return cart
     
@@ -373,14 +360,7 @@ $(document).ready(async function () {
                    
                 }
             });
-            // let result = await erpnext.shopping_cart.update_cart({
-                
-            // 	item_code:opts.item,
-            // 	additional_notes:opts.additional_notes,
-            //     qty: opts.qty
-            // });
-            
-            // return result
+           
         }
     
     
@@ -536,3 +516,4 @@ $(document).ready(async function () {
         });
     
     }
+    

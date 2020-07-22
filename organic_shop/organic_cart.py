@@ -646,5 +646,5 @@ def apply_coupon_code(applied_code,applied_referral_sales_partner):
 @frappe.whitelist(allow_guest=True)
 def del_quotation():
 	quote = _get_cart_quotation()
-	delete_cart = frappe.delete_doc("Quotation",quote.name)
+	delete_cart = frappe.delete_doc("Quotation",quote.name,ignore_permissions=True)
 	return delete_cart
