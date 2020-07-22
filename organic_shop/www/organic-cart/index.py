@@ -18,6 +18,7 @@ def get_context(context):
     context.item_group = frappe.get_all('Item Group', filters={"show_in_website":1,"is_group":0}, fields=["name","weightage","route"], order_by='weightage desc')
     context.warehouse = frappe.get_all("Warehouse",filters={"show_in_website":1,"is_group":0},fields = ["name","warehouse_name"])
     context.cust_def_warehouse = check_warehouse()
+    context.default_warehouse = frappe.db.get_value("Organic Cart Settings",None,"default_warehouse")
     
     # context.item = frappe.get_all("Item",filters={"show_in_website":1},fields=["name","image","item_group"])
     context.item_result = get_items()

@@ -61,6 +61,10 @@ def set_warehouse(user,value):
 	# else:
 	# 	return 0
 
+@frappe.whitelist(allow_guest=True)
+def get_value(doctype,name,field):
+	return frappe.db.get_value(doctype,name,field)
+
 
 
 

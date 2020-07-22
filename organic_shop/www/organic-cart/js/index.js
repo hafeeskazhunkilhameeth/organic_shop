@@ -253,6 +253,8 @@ $(document).ready(async function () {
         /* Add to cart click event */
 
         $("#warehouse").change(async function(){
+            let out_of_hyd = await get_value("Organic cart Settings",null,"out_of_hydrabad_warehouse")
+            console.log(out_of_hyd)
             
             if(frappe.get_cookie("cart_count") != 0){
                 $('#warehouse-popup').remove();
@@ -265,10 +267,16 @@ $(document).ready(async function () {
                     scrollableModal: false
             });
             }else{
-                let set_val = await set_warehouse($(this).val())
-                if(set_val.message.nearest_company_warehouse_cf == $(this).val()){
+                if (out_of_hyd.message == $(this).val()) {
+                    window.location.pathname = '/Order-from-outside-hyderabad'
+                }else{
+                    let set_val = await set_warehouse($(this).val())
+                    if(set_val.message.nearest_company_warehouse_cf == $(this).val()){
                     location.reload();
                 }
+
+                }
+                
             }
 
             
@@ -283,12 +291,20 @@ $(document).ready(async function () {
             }  
         })
         $("#change_store_yes").click(async function(){
+            
             $(this).parent().parent().find('.sb-close-btn').trigger('click');
-			let empty = await empty_cart();
-            let set_val = await set_warehouse($("#warehouse").val())
-            if(set_val.message.nearest_company_warehouse_cf == $("#warehouse").val()){
-                location.reload();
+            let out_of_hyd = await get_value("Organic cart Settings",null,"out_of_hydrabad_warehouse")
+            if (out_of_hyd.message == $("#warehouse").val()) {
+                window.location.pathname = '/Order-from-outside-hyderabad'
+            }else{
+                let empty = await empty_cart();
+                let set_val = await set_warehouse($("#warehouse").val())
+                if(set_val.message.nearest_company_warehouse_cf == $("#warehouse").val()){
+                    location.reload();
+                }
+
             }
+			
         })
         });
     
@@ -495,6 +511,24 @@ $(document).ready(async function () {
                     "args":{
                         "user":frappe.user,
                         "value":warehouse
+                    },
+                    callback:resolve
+                    
+                })
+            } catch (e) { reject(e); }
+        });
+        
+    }
+
+    async function get_value(doctype,name,field){
+        return new Promise(function (resolve, reject) {
+            try {
+                frappe.call({
+                    "method":"organic_shop.api.get_value",
+                    "args":{
+                        "doctype":doctype,
+                        "name":name,
+                        "field":field
                     },
                     callback:resolve
                     
