@@ -283,7 +283,8 @@ $(document).ready(async function () {
             }  
         })
         $("#change_store_yes").click(async function(){
-            let empty = await empty_cart()
+            $(this).parent().parent().find('.sb-close-btn').trigger('click');
+			let empty = await empty_cart();
             let set_val = await set_warehouse($("#warehouse").val())
             if(set_val.message.nearest_company_warehouse_cf == $("#warehouse").val()){
                 location.reload();

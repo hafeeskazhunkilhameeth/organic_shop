@@ -271,8 +271,8 @@
                         </div>
                         <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 pad-o vigieCart-tab tab-content cf">
                             {% if frappe.user != "Guest" %}
-                            <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-1-rgt pad-resp-r">
-                                <label for="warehouse">Selected Warehouse : </label><div class="search-selectpicker selectpicker-wrapper" style="padding: 10px;">
+                            <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 col-1-rgt pad-resp-r text-center">
+                                <label for="warehouse" class="select_warehouse123">Selected Warehouse : </label><div class="search-selectpicker selectpicker-wrapper" style="padding: 10px;">
                                     <select name="warehouse" id="warehouse" class="select_warehouse selectpicker">
                                         {% if cust_def_warehouse[0] != 2 %}
                                             <option value="{{cust_def_warehouse[0]}}" selected>{{cust_def_warehouse[1]}}</option>
@@ -787,7 +787,7 @@ Secunderabad, Telangana - 500017 </span> </li>
                             </div>
                         </div>
                         <div class="form-group"> 
-                            <a href="#" class="theme-btn btn" id="change_store_yes"> <strong>YES</strong> </a>                                              
+                            <a href="#." class="theme-btn btn" id="change_store_yes"> <strong>YES</strong> </a>                                              
                             <!-- <button class="theme-btn upper-text" id="set_warehouse"> <strong> Select Store </strong> </button>                                             -->
                         </div>
                         <div class="form-group"> 
@@ -804,11 +804,10 @@ Secunderabad, Telangana - 500017 </span> </li>
                 <!-- <button type="button" class="sb-close-btn close popup-cls"> <i class="fa-times fa clr-txt"></i> </button> -->
                 <div class="subscribe-wrap">                                                                   
                     <div class="main-logo">
-                        <a href="index.html"> <img alt="" src="app-assets/img/logo/main-logo.png" />  </a>
+                        <a href="/"> <img alt="" src="files/sahaja%20aharam%20mobile%202.png" style="max-width:150px;"  />  </a>
                     </div>
                     <div class="title-wrap">
-                        <h2 class="section-title"> <strong>Subscribe Newsletter</strong> </h2>
-                        <h4 class="fsz-12">Select Your Nearest Store</h4>
+                        <h4 class="fsz-22" style="font-size:22px; line-height: 28px; color:#f2f2f2;">Select Your Nearest Store</h4>
                     </div>
                     <form class="newsletter-form">
                         <div class="sort-dropdown">

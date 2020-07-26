@@ -266,3 +266,16 @@ button.btn.btn-success.custom_add2cart {
     margin: 0;
 }
 }    
+
+#warehouse-popup .bootstrap-select > .dropdown-toggle.btn-default:hover, #warehouse-popup  .bootstrap-select > .dropdown-toggle.btn-default:focus, #warehouse-popup  .bootstrap-select > .dropdown-toggle.btn-default:active{
+	color: #f2f2f2;
+}	
+#warehouse-popup .selectpicker {
+	font-size:16px;
+}
+.search-selectpicker{
+	display:inline-block !important;
+}	
+label.select_warehouse123{
+	display:block !important;
+}	
